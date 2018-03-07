@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded',init);
 
 async function init(){
-    let response = await fetch('data/countries.json');
+    let response = await fetch('./data/countries.json');
     let countries = await response.json();
 
-    response = await fetch('data/flag-names.json');
+    response = await fetch('./data/flag-names.json');
     let flagNames = await response.json();
     
-    response = await fetch('data/streetview-countries.json');
+    response = await fetch('./data/streetview-countries.json');
     let streetviewCountries = await response.json();
 
     console.log(streetviewCountries);
