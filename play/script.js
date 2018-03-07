@@ -36,6 +36,5 @@ async function init() {
 }
 
 function goHome() {
-    alert('choose another map');
-    location.reload();
+    location.href = '../';
 }
