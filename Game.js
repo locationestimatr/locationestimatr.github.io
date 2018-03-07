@@ -3,7 +3,7 @@ class Game {
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector('.streetview'));
 
-        this.guessMap = new google.maps.Map(element.querySelector('.embed-map'), {
+        this.googleMap = new google.maps.Map(element.querySelector('.map-element'), {
             zoom: 0,
             center: { lat: 0, lng: 0 },
             disableDefaultUI: true,
@@ -11,27 +11,54 @@ class Game {
             backgroundColor: '#aadaff',
             fullscreenControl: false,
         });
-        google.maps.event.addListener(this.guessMap, 'click', e => this.placeGuessMarker(e.latLng));
+        this.attachMap('.embed-map');
+        google.maps.event.addListener(this.googleMap, 'click',
+            e => this.placeGuessMarker(e.latLng)
+        );
 
-        this.overviewMap = new google.maps.Map(element.querySelector('.overview-map'), {
-            zoom: 2,
-            center: { lat: 0, lng: 0 },
-            disableDefaultUI: true,
-            clickableIcons: false,
-            backgroundColor: '#aadaff',
-            fullscreenControl: false,
-        });
+        // this.googleMap = new google.maps.Map(element.querySelector('.overview-map'), {
+        //     zoom: 2,
+        //     center: { lat: 0, lng: 0 },
+        //     disableDefaultUI: true,
+        //     clickableIcons: false,
+        //     backgroundColor: '#aadaff',
+        //     fullscreenControl: false,
+        // });
 
         this.setResizeEventListeners();
 
         this.newGame(map, rules);
+
+        this.ready =false;
+        this.once('nextRound', ()=>{
+            this.ready=true;
+        });
+    }
+
+    start(e) {
+        if (e) e.preventDefault();
+
+        this.once('nextRound', ()=>{
+            console.log("next round");
+        });
+        this.hideGameRuleSelection();
+    }
+
+    hideGameRuleSelection() {
+        document.querySelector(".gamerule-selector").style.transform = 'translateY(-100%)';
+    }
+
+    attachMap(selector) {
+        let mapElement = this.googleMap.getDiv();
+        mapElement.remove();
+        this.element.querySelector(selector).appendChild(mapElement);
     }
 
     toggleMapOverlay() {
         if (this.map.polygon.getMap()) {
-            game.map.polygon.setMap(null);
+            this.map.polygon.setMap(null);
         } else {
-            game.map.polygon.setMap(game.guessMap);
+            this.map.polygon.setMap(this.googleMap);
         }
     }
 
@@ -100,6 +127,8 @@ class Game {
     }
 
     showRoundOverview(guess, actual) {
+        this.attachMap('.overview-map');
+
         let overviewElement = this.element.querySelector('.guess-overview');
         overviewElement.style.transform = 'translateY(0%)';
 
@@ -122,12 +151,13 @@ class Game {
 
         setTimeout(() => {
             overviewElement.querySelector('.score-progress').style.width = (score / this.map.maxScore * 100) + '%';
-            this.removeOverviewLines();
             this.addOverviewLine(guess, actual, 600);
         }, 300);
     }
 
     showGameOverview(guess, actual) {
+        this.attachMap('.overview-map');
+
         let overviewElement = this.element.querySelector('.guess-overview');
         overviewElement.style.transform = 'translateY(0%)';
 
@@ -158,14 +188,13 @@ class Game {
 
         setTimeout(() => {
             overviewElement.querySelector('.score-progress').style.width = (score / this.map.maxScore * 100) + '%';
-            this.removeOverviewLines();
             for (let result of this.previousGuesses)
                 this.addOverviewLine(result.guess, result.actual, 600);
         }, 300);
     }
 
     fitMapToGeoMap() {
-        this.guessMap.fitBounds(this.map.getBounds());
+        this.googleMap.fitBounds(this.map.getBounds());
     }
 
     fitMap(positions) {
@@ -176,7 +205,7 @@ class Game {
                 lng: location[1]
             });
         }
-        this.overviewMap.fitBounds(bounds);
+        this.googleMap.fitBounds(bounds);
     }
 
     nextRoundButton() {
@@ -210,7 +239,11 @@ class Game {
             this.preloadNextMap();
 
         setTimeout(() => {
+            console.log("firing next round");
+            console.log(this.events);
             this.fire('nextRound');
+            this.removeOverviewLines();
+            this.attachMap('.embed-map');
         }, 500);
         this.svElement.setLocation(...this.currentDestination);
     }
@@ -236,7 +269,7 @@ class Game {
             strokeColor: 'red',
             strokeOpacity: 0.8,
             strokeWeight: 3,
-            map: this.overviewMap
+            map: this.googleMap
         });
 
         let dropTime = 250;
@@ -248,7 +281,7 @@ class Game {
 
         lineData.guess = new google.maps.Marker({
             position: guess,
-            map: this.overviewMap,
+            map: this.googleMap,
             animation: google.maps.Animation.DROP,
             title: 'Your guess',
         });
@@ -278,7 +311,7 @@ class Game {
                 icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
                 title: 'Actual location',
             });
-            lineData.actual.setMap(this.overviewMap);
+            lineData.actual.setMap(this.googleMap);
         }, animationTime);
     }
 
@@ -329,7 +362,7 @@ class Game {
 
         this.marker = new google.maps.Marker({
             position: location,
-            map: this.guessMap
+            map: this.googleMap
         });
         this.enableGuessButton();
     }
@@ -358,8 +391,7 @@ class Game {
     }
 
     once(event, callback) {
-        let onceCallback;
-        onceCallback = () => {
+        let onceCallback = () => {
             callback();
             this.off(event, onceCallback);
         }
@@ -367,8 +399,10 @@ class Game {
     }
 
     on(event, callback) {
-        if (!this.events[event])
+        if (!this.events[event]){
+            console.log("resetting events for"+event);
             this.events[event] = [];
+        }
         this.events[event].push(callback);
     }
 

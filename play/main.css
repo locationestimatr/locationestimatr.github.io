@@ -23,6 +23,123 @@ body {
     height: 100%;
 }
 
+.gamerule-selector {
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 40px);
+    background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+    height: calc(100% - 40px);
+    z-index: 7;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+}
+
+.gamerule-selector p {
+    font-size: 20px;
+}
+
+.round-count-picker {
+    margin: 20px;
+}
+
+.pan-radio .radio-choice {
+    width: 100px;
+    border-radius: 25px;
+}
+
+.radio-choice {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: inline-block;
+    cursor: pointer;
+    margin: 20px 5px;
+    line-height: 50px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0px 0px 0px 0px white;
+    font-weight: bolder;
+    transition: 0.3s;
+}
+
+.radio-choice:hover {
+    box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.4);
+}
+
+input[type="radio"]:checked+.radio-choice {
+    box-shadow: inset 0px 0px 0px 2px white;
+}
+
+.gamerule-selector input[type="radio"] {
+    display: none;
+}
+
+.number-picker {
+    display: block;
+    margin: 20px;
+}
+
+.hint {
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.gamerule-selector input[type="number"] {
+    border: none;
+    background-color: transparent;
+    box-shadow: 0px 2px 1px -2px white;
+    ;
+    color: white;
+    display: inline-block;
+    margin: 20px;
+    width: 70px;
+    padding: 20px 0px!important;
+    cursor: text;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 0px;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.gamerule-selector h2 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.map-element {
+    width: 100%;
+    height: 100%;
+}
+
+.gamerule-selector input[type="submit"] {
+    border: none;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 20px;
+    margin-top: 20px;
+    color: white;
+    box-shadow: inset 0px 0px 0px 0px white;
+    font-weight: 300;
+    transition: 0.25s;
+}
+
+.gamerule-selector input[type="submit"]:hover {
+    background-color: white;
+    color: #330867;
+    box-shadow: inset 0px 0px 0px 2px white;
+    transform: scale(1.05);
+}
+
 .guess-overview {
     transform: translateY(-100%);
     width: 100%;
@@ -81,7 +198,7 @@ body {
     height: 100%;
     background-image: linear-gradient(to right, #06f998, #25a055);
     border-radius: 3px;
-    transition:0.6s;
+    transition: 0.6s;
 }
 
 .button {
@@ -146,21 +263,21 @@ body {
     border-top-right-radius: 10px;
 }
 
-.toggle-map-overlay{
-    width:30px;
-    height:30px;
+.toggle-map-overlay {
+    width: 30px;
+    height: 30px;
     position: absolute;
-    top:5px;
-    left:5px;
-    background-color:rgb(34, 34, 34);
-    color:#ccc;
-    border-radius:50%;
-    background-image:url(../img/layers.svg);
-    background-size:60%;
+    top: 5px;
+    left: 5px;
+    background-color: rgb(34, 34, 34);
+    color: #ccc;
+    border-radius: 50%;
+    background-image: url(../img/layers.svg);
+    background-size: 60%;
     background-position: center;
     z-index: 5;
     background-repeat: no-repeat;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .return-home {
@@ -215,12 +332,12 @@ body {
 
 ::-moz-selection {
     color: white;
-    background: rgb(255, 80, 0);
+    background: #3b5d78;
 }
 
 ::selection {
     color: white;
-    background: rgb(255, 80, 0);
+    background: #3b5d78;
 }
 
 ::-webkit-input-placeholder {

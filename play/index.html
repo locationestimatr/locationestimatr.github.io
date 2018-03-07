@@ -32,6 +32,45 @@
 
 <body>
     <div class='estimator'>
+        <div class="gamerule-selector">
+            <h2>Rules</h2>
+            <form>
+                <div class="radio-picker">
+                    <p>Round count</p>
+                    <input type="radio" name="round-count" value="1" id="1round">
+                    <label class="radio-choice" for="1round">1</label>
+                    <input type="radio" name="round-count" value="2" id="2round">
+                    <label class="radio-choice" for="2round">2</label>
+                    <input type="radio" name="round-count" value="3" id="3round">
+                    <label class="radio-choice" for="3round">3</label>
+                    <input type="radio" name="round-count" value="4" id="4round">
+                    <label class="radio-choice" for="4round">4</label>
+                    <input type="radio" name="round-count" value="5" id="5round" checked>
+                    <label class="radio-choice" for="5round">5</label>
+                </div>
+                <label class="number-picker">
+                    <p>Time limit</p>
+                    <p class="hint">0 = infinite</p>
+                    <input type="number" name='time-limit' class='button' value="0">
+                    <span>Seconds</span>
+                </label>
+                <label class="number-picker">
+                    <p>Move limit</p>
+                    <p class="hint">0 = infinite</p>
+                    <input type="number" name='move-limit' class='button' value="0">
+                    <span>Moves</span>
+                </label>
+                <div class="radio-picker pan-radio">
+                    <p>Zooming and panning allowed</p>
+                    <input type="radio" name="pan-allowed" value="yes" id="yes" checked>
+                    <label class="radio-choice" for="yes">Yes</label>
+                    <input type="radio" name="pan-allowed" value="no" id="no">
+                    <label class="radio-choice" for="no">No</label>
+                </div>
+                <input type="submit" class="button" value="Start Game" onclick="game.start(event)">
+            </form>
+        </div>
+        <div class="map-element"></div>
         <div class="guess-overview">
             <div class="overview-map"></div>
             <div class="score-view">
