@@ -4,8 +4,6 @@
 // Map editor maken
 // Style return home button
 // Photosphere gamemode toevoegen
-// Bug in punten telling
-// Detect wanneer land geen street view heeft
 // Load size van voorpagina verminderen
 
 distribution = { weighted: 0, uniform: 1 }
