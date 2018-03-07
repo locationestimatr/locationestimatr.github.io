@@ -58,8 +58,8 @@
             "Central African Republic",
             "Chad",
             "Comoros",
-            "Democratic Republic of the Congo",
-            "Republic of the Congo",
+            "Congo, DRC",
+            "Congo",
             "Cote d'Ivoire",
             "Djibouti",
             "Egypt",
@@ -81,6 +81,7 @@
             "Mauritania",
             "Mauritius",
             "Morocco",
+            "Western Sahara",
             "Mozambique",
             "Namibia",
             "Niger",
@@ -128,7 +129,8 @@
             "Saint Lucia",
             "Saint Vincent and the Grenadines",
             "Trinidad and Tobago",
-            "United States"
+            "United States",
+            "Greenland"
         ]
     },
     "southamerica": {
@@ -233,7 +235,7 @@
             "Malaysia",
             "Maldives",
             "Mongolia",
-            "Myanmar (Burma)",
+            "Myanmar",
             "Nepal",
             "North Korea",
             "Oman",
