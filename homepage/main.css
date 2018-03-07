@@ -1,0 +1,177 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-weight: 300;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: default;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+    background-attachment: fixed;
+    color: rgba(255, 255, 255, 0.8);
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+.front-page {
+    width: 100%;
+    text-align: center;
+    font-family: 'Montserrat';
+    margin-bottom: 3em;
+}
+
+.front-page>h1 {
+    font-size: 5em;
+    padding: 2em 0em;
+}
+
+.front-page h2 {
+    font-size: 1.8em;
+    padding: 1em 0em;
+    text-shadow: 0 0 1em rgba(0, 0, 0, 0.57);
+    background-color: rgba(0,0,0,0.3);
+    margin: 1em 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .map-container {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .map-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .map-container {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+}
+
+.map-container {
+    display: inline-grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2em;
+    grid-auto-rows: minmax(10em, auto);
+    max-width: 1200px;
+    width: 90%;
+}
+
+.map {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0.7em;
+    box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.2);
+    height: 100%;
+    cursor: pointer;
+    transition:0.15s;
+}
+.map:hover{
+    transform: scale(1.1);
+    box-shadow: 0 0 3em 0 rgba(0,0,0,0.5);
+}
+
+.map-title {
+    pointer-events: none;
+    height: 2.3em;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 2.3em;
+    font-weight: bold;
+    font-size: 1em;
+    position: relative;
+    top: -2.3em;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom-right-radius: 0.7em;
+    border-bottom-left-radius: 0.7em;
+}
+
+.map-background {
+    pointer-events: none;
+    height:100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    border-radius: 0.7em;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.20);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.60);
+}
+
+*:focus {
+    outline: none;
+}
+
+*:link, *:visited {
+    color: white;
+    text-decoration: none;
+}
+
+::-moz-selection {
+    color: white;
+    background: rgb(255, 80, 0);
+}
+
+::selection {
+    color: white;
+    background: rgb(255, 80, 0);
+}
+
+::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+:-moz-placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    opacity: 1;
+}
+
+::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+input[type=text], input[type=password], input[type=email], input[type=number] textarea {
+    cursor: text;
+}
+
+input[type='button'], input[type='submit'], a[href] {
+    cursor: pointer;
+}

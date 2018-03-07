@@ -1,0 +1,67 @@
+<html lang='nl'>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35913371-8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-35913371-8');
+    </script>
+    <meta charset='utf-8' />
+    <title>Location Estimatr</title>
+    <meta name='theme-color' content='#6e45e2'>
+    <meta name='mobile-web-app-capable' content='yes'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel='icon' sizes='192x192' href='../img/favicon.png'>
+    <link rel='shortcut icon' type='image/png' href='../img/favicon.png'> -->
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+    <!-- Favicon moet 192x192 zijn -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+    <link rel='stylesheet' href='main.css'>
+    <script src='script.js' type='text/javascript'></script>
+    <script src='../GeoMap.js' type='text/javascript'></script>
+    <script src='../Streetview.js' type='text/javascript'></script>
+    <script src='../Game.js' type='text/javascript'></script>
+    <script src='../StreetviewElement.js' type='text/javascript'></script>
+    <script src='../MapManager.js' type='text/javascript'></script>
+</head>
+
+<body>
+    <div class='estimator'>
+        <div class="guess-overview">
+            <div class="overview-map"></div>
+            <div class="score-view">
+                <div class="score-progress-bar">
+                    <div class="score-progress"></div>
+                </div>
+                <div class="score-text">
+                    <p>Your guess is 0 cm removed from your start location</p>
+                    <p>You scored ∞ points</p>
+                </div>
+                <div class="button next-round-button" onclick="game.nextRoundButton()">Next Round</div>
+                <div class="game-end-buttons">
+                    <div class="button play-again-button" onclick="game.newGame()">Play Again</div>
+                    <div class="button home-button" onclick="goHome()">Choose Another Map</div>
+                </div>
+            </div>
+        </div>
+        <div class="return-home" onclick="game.returnHome()"></div>
+        <div class="guess-map">
+            <div class="toggle-map-overlay" onclick="game.toggleMapOverlay()"></div>
+            <div class="guess-map-resizer"></div>
+            <div class="embed-map"></div>
+            <div class="guess-button" onclick="game.makeGuess()">Make Guess</div>
+        </div>
+        <div class="streetview"></div>
+    </div>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgTAL1XKBxQmkdz-FUItoNAqkN4QdoBbk&callback=init&libraries=geometry"></script>
+</body>
+
+</html>
