@@ -164,6 +164,10 @@ class Game {
         }, 300);
     }
 
+    fitMapToGeoMap() {
+        this.guessMap.fitBounds(this.map.getBounds());
+    }
+
     fitMap(positions) {
         let bounds = new google.maps.LatLngBounds();
         for (let location of positions) {
@@ -200,8 +204,7 @@ class Game {
         }
         this.currentDestination = this.nextDestination;
         this.disableGuessButton();
-        this.guessMap.setZoom(0);
-        this.guessMap.setCenter({ lat: 0, lng: 0 });
+        this.fitMapToGeoMap();
 
         if (++this.currentRound < this.rules.roundCount)
             this.preloadNextMap();
