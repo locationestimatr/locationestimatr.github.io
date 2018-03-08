@@ -3,9 +3,9 @@ class Game {
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector('.streetview'), element.querySelector('.return-home'));
 
-        this.scoreElement = element.querySelector('.total-score b');
-        this.timeElement = element.querySelector('.time-left b');
-        this.movesElement = element.querySelector('.moves-left b');
+        this.scoreElement = element.querySelector('.total-score');
+        this.timeElement = element.querySelector('.time-left');
+        this.movesElement = element.querySelector('.moves-left');
 
         this.googleMap = new google.maps.Map(element.querySelector('.map-element'), {
             zoom: 0,
@@ -33,18 +33,15 @@ class Game {
 
         this.ready = false;
         this.once('nextRound', () => {
-            console.log('ready is now true');
             this.ready = true;
         });
-
-        this.start();
     }
 
-    start(e) {
-        console.log('start called', this.ready);
+    setRules(e) {
+        console.log('set rules called', this.ready);
         if (e) e.preventDefault();
         if (!this.ready) {
-            this.once('nextRound', () => setTimeout(() => this.start(), 5));
+            this.once('nextRound', () => setTimeout(() => this.setRules(), 5));
             return;
         }
 
@@ -52,17 +49,22 @@ class Game {
 
         let form = game.element.querySelector('form');
         let [roundCount, timeLimit, moveLimit, ...restrictions] = [...new FormData(form)].map(n => n[1]);
-        let rules = {roundCount, timeLimit, moveLimit};
+        let rules = {roundCount: +roundCount, timeLimit: +timeLimit, moveLimit: +moveLimit};
         rules.panAllowed = restrictions.includes('pan');
         rules.zoomAllowed = restrictions.includes('zoom');
         this.rules = rules;
 
-        console.log(rules);
+        setTimeout(() => this.applyRules(), 300);
+    }
 
-        this.applyRules();
+    resetRestrictions() {
+        this.svElement.resetRestrictions();
+        this.timeElement.style.display = 'none';
+        this.movesElement.style.display = 'none';
     }
 
     applyRules() {
+        console.log('setRules called');
         if (!this.rules.panAllowed)
             this.svElement.restrictPan();
 
@@ -77,14 +79,26 @@ class Game {
     }
 
     startTimer(seconds) {
-        this.timeElement.innerText = seconds;
-        setTimeout(() => {
-            this.makeGuess();
-        }, seconds * 1000);
-        setInterval(()=>{
+        if (this.timerRunning)
+            return;
+        this.timerRunning = true;
+        this.timeElement.style.display = 'inline-block';
+        this.timeElement.innerHTML = `Time: <b>${seconds}</b>`;
+        this.timeInterval = setInterval(() => {
             seconds -= 0.1;
-            this.timeElement.textContent = Math.round(seconds);
-        },100);
+            this.timeElement.innerHTML = `Time: <b>${seconds < 10 ? (Math.round(seconds * 10) / 10).toFixed(1) : Math.round(seconds)}</b>`;
+        }, 100);
+        this.timeTimeout = setTimeout(() => {
+            this.makeGuess({lat: 0, lng: 0});
+            clearInterval(this.timeInterval);
+            this.timerRunning = false;
+        }, seconds * 1000);
+    }
+
+    endTimer() {
+        clearTimeout(this.timeTimeout);
+        clearInterval(this.timeInterval);
+        this.timerRunning = false;
     }
 
     hideGameRuleSelection() {
@@ -155,28 +169,25 @@ class Game {
 
         this.preloadNextMap();
         this.nextRound();
+    }
 
+    playAgain() {
         let button = this.element.querySelector('.play-again-button');
         button.innerText = 'Loading...';
-
+        this.newGame();
         this.once('nextRound', () => {
             let overviewElement = this.element.querySelector('.guess-overview');
             overviewElement.style.transform = 'translateY(-100%)';
-
             setTimeout(() => {
                 button.innerText = 'Play Again';
+                this.applyRules();
             }, 300);
-        })
+        });
     }
 
-    showRoundOverview(guess, actual) {
+    showOverview(guess, actual) {
         this.attachMap('.overview-map');
 
-        let overviewElement = this.element.querySelector('.guess-overview');
-        overviewElement.style.transform = 'translateY(0%)';
-
-        overviewElement.querySelector('.next-round-button').style.display = 'inline-block';
-        overviewElement.querySelector('.game-end-buttons').style.display = 'none';
 
         let distance = this.measureDistance(guess, actual);
         let niceDistance = this.formatDistance(distance);
@@ -186,12 +197,25 @@ class Game {
             guess, actual, score
         });
 
+        return [score, niceDistance];
+    }
+
+    showRoundOverview(guess, actual) {
+        let [score, niceDistance] = this.showOverview(guess, actual);
+
+        let overviewElement = this.element.querySelector('.guess-overview');
+        overviewElement.style.transform = 'translateY(0%)';
+        overviewElement.querySelector('.next-round-button').style.display = 'inline-block';
+        overviewElement.querySelector('.game-end-buttons').style.display = 'none';
+
         let [meterElement, scoreElement] = overviewElement.querySelectorAll('.score-text p');
         meterElement.innerText = `Your guess is ${niceDistance} removed from your start location`;
-        scoreElement.innerText = `You scored ${score} points`;
+        if (score === 1)
+            scoreElement.innerText = `You scored a point`;
+        else
+            scoreElement.innerText = `You scored ${score} points`;
 
         this.fitMap([guess, actual]);
-
         setTimeout(() => {
             overviewElement.querySelector('.score-progress').style.width = (score / this.map.maxScore * 100) + '%';
             this.addOverviewLine(guess, actual, 600);
@@ -199,38 +223,28 @@ class Game {
     }
 
     showGameOverview(guess, actual) {
-        this.attachMap('.overview-map');
+        let [score, niceDistance] = this.showOverview(guess, actual);
 
         let overviewElement = this.element.querySelector('.guess-overview');
         overviewElement.style.transform = 'translateY(0%)';
-
         overviewElement.querySelector('.next-round-button').style.display = 'none';
         overviewElement.querySelector('.game-end-buttons').style.display = 'block';
-
-        let distance = this.measureDistance(guess, actual);
-        let niceDistance = this.formatDistance(distance);
-        let score = this.map.scoreCalculation(distance);
-
-        this.previousGuesses.push({
-            guess, actual, score
-        });
 
         let totalScore = this.previousGuesses.map(result => result.score).reduce((a, b) => a + b);
         let maxScore = this.map.maxScore * this.rules.roundCount;
 
         let [meterElement, scoreElement] = overviewElement.querySelectorAll('.score-text p');
         meterElement.innerText = `Your latest guess is ${niceDistance} removed from your start location`;
-        if (score === 1) {
+        if (score === 1)
             scoreElement.innerText = `You scored a point, which brings your total score to ${totalScore} points`;
-        } else {
+        else
             scoreElement.innerText = `You scored ${score} points, which brings your total score to ${totalScore} points`;
-        }
 
         let locations = this.previousGuesses.map(result => result.guess).concat(this.previousGuesses.map(result => result.actual));
         this.fitMap(locations);
 
         setTimeout(() => {
-            overviewElement.querySelector('.score-progress').style.width = (score / this.map.maxScore * 100) + '%';
+            overviewElement.querySelector('.score-progress').style.width = (score / maxScore * 100) + '%';
             for (let result of this.previousGuesses)
                 this.addOverviewLine(result.guess, result.actual, 600);
         }, 300);
@@ -261,6 +275,10 @@ class Game {
 
             setTimeout(() => {
                 button.innerText = 'Next Round';
+                if (this.svElement.panorama) {
+                    this.svElement.panorama.setZoom(0);
+                    this.applyRules();
+                }
             }, 300);
         })
         this.nextRound();
@@ -273,6 +291,9 @@ class Game {
             this.once('preload', () => this.nextRound());
             return;
         }
+
+        if (this.svElement.panorama)
+            this.resetRestrictions();
         this.currentDestination = this.nextDestination;
         this.disableGuessButton();
         this.fitMapToGeoMap();
@@ -372,9 +393,10 @@ class Game {
     }
 
     makeGuess() {
-        if (this.marker === undefined)
+        if (this.marker === undefined || this.marker.getMap() === null)
             this.placeGuessMarker({lat: 0, lng: 0});
         this.marker.setMap(null);
+        this.endTimer();
 
         let guessLocation = [this.marker.position.lat(), this.marker.position.lng()];
 

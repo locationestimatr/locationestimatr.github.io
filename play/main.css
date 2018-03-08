@@ -48,6 +48,10 @@ body {
     font-weight: bold;
 }
 
+.time-left, .moves-left {
+    display: none;
+}
+
 .gamerule-selector {
     text-align: center;
     padding: 20px;

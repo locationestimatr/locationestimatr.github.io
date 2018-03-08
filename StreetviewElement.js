@@ -4,10 +4,18 @@ class StreetviewElement {
         this.element = element;
     }
 
+    resetRestrictions() {
+        this.allowMove();
+        this.allowPan();
+        this.allowZoom();
+        this.removeMoveLimit();
+    }
+
     setMoveLimit(moves, remainingElement) {
-        remainingElement.innerText = moves;
+        remainingElement.style.display = 'inline-block';
+        remainingElement.innerHTML = `Moves: <b>${moves}</b>`;
         this.panorama.addListener('position_changed', () => {
-            remainingElement.innerText = --moves;
+            remainingElement.innerHTML = `Moves: <b>${--moves}</b>`;
             if (moves === 0)
                 this.restrictMove();
         });

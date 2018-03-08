@@ -8,7 +8,7 @@ class GeoMap {
     }
 
     getBounds() {
-        var bounds = new google.maps.LatLngBounds();
+        const bounds = new google.maps.LatLngBounds();
         this.polygon.getPaths().forEach(path => {
             path.forEach(pos => {
                 bounds.extend(pos);

@@ -55,13 +55,13 @@
             <label class="number-picker">
                 <p>Time limit</p>
                 <p class="hint">-1 = infinite</p>
-                <input type="number" name='time-limit' class='button' value="-1">
+                <input type="number" name='time-limit' class='button' value="10">
                 <span>Seconds</span>
             </label>
             <label class="number-picker">
                 <p>Move limit</p>
                 <p class="hint">-1 = infinite</p>
-                <input type="number" name='move-limit' class='button' value="-1">
+                <input type="number" name='move-limit' class='button' value="3">
                 <span>Moves</span>
             </label>
             <div class="radio-picker pan-radio">
@@ -71,7 +71,7 @@
                 <input type="checkbox" name="pan-allowed" value="zoom" id="no" checked>
                 <label class="radio-choice" for="no">Zoom</label>
             </div>
-            <input type="submit" class="button" value="Start Game" onclick="game.start(event)">
+            <input type="submit" class="button" value="Start Game" onclick="game.setRules(event)">
         </form>
     </div>
     <div class="map-element"></div>
@@ -87,15 +87,15 @@
             </div>
             <div class="button next-round-button" onclick="game.nextRoundButton()">Next Round</div>
             <div class="game-end-buttons">
-                <div class="button play-again-button" onclick="game.newGame()">Play Again</div>
+                <div class="button play-again-button" onclick="game.playAgain();">Play Again</div>
                 <div class="button home-button" onclick="goHome()">Choose Another Map</div>
             </div>
         </div>
     </div>
     <div class="info-view">
-        <div class="total-score">Score: <b>19287</b></div>
-        <div class="time-left">Time: <b>10.5</b></div>
-        <div class="moves-left">Moves: <b>5</b></div>
+        <div class="total-score">Score: <b>0</b></div>
+        <div class="time-left">Time: <b>0</b></div>
+        <div class="moves-left">Moves: <b>0</b></div>
     </div>
     <div class="return-home" onclick="game.returnHome()"></div>
     <div class="guess-map">
