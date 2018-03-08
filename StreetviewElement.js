@@ -12,6 +12,9 @@ class StreetviewElement {
     }
 
     setMoveLimit(moves, remainingElement) {
+        console.log({moves});
+        if (moves === 0)
+            this.restrictMove();
         remainingElement.style.display = 'inline-block';
         remainingElement.innerHTML = `Moves: <b>${moves}</b>`;
         this.panorama.addListener('position_changed', () => {

@@ -27,7 +27,7 @@ body {
     position: absolute;
     top: 0;
     left: calc(50% - 230px);
-    width: 420px;
+    width: 510px;
     z-index: 5;
     text-align: center;
     margin: 5px;

@@ -6,6 +6,7 @@ class Game {
         this.scoreElement = element.querySelector('.total-score');
         this.timeElement = element.querySelector('.time-left');
         this.movesElement = element.querySelector('.moves-left');
+        this.roundElement = element.querySelector('.round');
 
         this.googleMap = new google.maps.Map(element.querySelector('.map-element'), {
             zoom: 0,
@@ -16,7 +17,10 @@ class Game {
             fullscreenControl: false,
         });
         this.attachMap('.embed-map');
-        google.maps.event.addListener(this.googleMap, 'click', e => this.placeGuessMarker(e.latLng));
+        google.maps.event.addListener(this.googleMap, 'click', e => {
+            if (this.googleMap.getDiv().parentElement.attributes.class.value === 'embed-map')
+                this.placeGuessMarker(e.latLng);
+        });
 
         // this.googleMap = new google.maps.Map(element.querySelector('.overview-map'), {
         //     zoom: 2,
@@ -64,25 +68,24 @@ class Game {
     }
 
     applyRules() {
-        console.log('setRules called');
         if (!this.rules.panAllowed)
             this.svElement.restrictPan();
 
         if (!this.rules.zoomAllowed)
             this.svElement.restrictZoom();
 
-        if (+this.rules.moveLimit !== -1)
-            this.svElement.setMoveLimit(+this.rules.moveLimit, this.movesElement);
+        if (this.rules.moveLimit !== -1)
+            this.svElement.setMoveLimit(this.rules.moveLimit, this.movesElement);
 
-        if (+this.rules.timeLimit !== -1)
+        if (this.rules.timeLimit !== -1)
             this.startTimer(+this.rules.timeLimit);
     }
 
     startTimer(seconds) {
         if (this.timerRunning)
             return;
-        this.timerRunning = true;
         this.timeElement.style.display = 'inline-block';
+        this.timerRunning = true;
         this.timeElement.innerHTML = `Time: <b>${seconds}</b>`;
         this.timeInterval = setInterval(() => {
             seconds -= 0.1;
@@ -166,6 +169,7 @@ class Game {
         this.events = {};
         this.overviewLines = [];
         this.previousGuesses = [];
+        this.roundElement.innerHTML = `Round: <b>${this.currentRound}/${this.rules.roundCount}</b>`;
 
         this.preloadNextMap();
         this.nextRound();
@@ -197,7 +201,11 @@ class Game {
             guess, actual, score
         });
 
-        return [score, niceDistance];
+        let totalScore = this.previousGuesses.map(result => result.score).reduce((a, b) => a + b);
+
+        this.scoreElement.innerHTML = `Score: <b>${totalScore}</b>`;
+
+        return [score, niceDistance, totalScore];
     }
 
     showRoundOverview(guess, actual) {
@@ -223,14 +231,13 @@ class Game {
     }
 
     showGameOverview(guess, actual) {
-        let [score, niceDistance] = this.showOverview(guess, actual);
+        let [score, niceDistance, totalScore] = this.showOverview(guess, actual);
 
         let overviewElement = this.element.querySelector('.guess-overview');
         overviewElement.style.transform = 'translateY(0%)';
         overviewElement.querySelector('.next-round-button').style.display = 'none';
         overviewElement.querySelector('.game-end-buttons').style.display = 'block';
 
-        let totalScore = this.previousGuesses.map(result => result.score).reduce((a, b) => a + b);
         let maxScore = this.map.maxScore * this.rules.roundCount;
 
         let [meterElement, scoreElement] = overviewElement.querySelectorAll('.score-text p');
@@ -285,7 +292,6 @@ class Game {
     }
 
     nextRound() {
-
         // Check if next destination is loaded
         if (!this.mapLoaded) {
             this.once('preload', () => this.nextRound());
@@ -296,15 +302,20 @@ class Game {
             this.resetRestrictions();
         this.currentDestination = this.nextDestination;
         this.disableGuessButton();
-        this.fitMapToGeoMap();
+        // this.fitMapToGeoMap();
 
         if (++this.currentRound < this.rules.roundCount)
             this.preloadNextMap();
 
+        this.roundElement.innerHTML = `Round: <b>${this.currentRound}/${this.rules.roundCount}</b>`;
+
         setTimeout(() => {
+            this.timeElement.style.display = 'none';
+            this.movesElement.style.display = 'none';
             this.fire('nextRound');
             this.removeOverviewLines();
             this.attachMap('.embed-map');
+            this.fitMapToGeoMap();
         }, 500);
         this.svElement.setLocation(...this.currentDestination);
     }
