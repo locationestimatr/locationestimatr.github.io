@@ -29,23 +29,40 @@ class Game {
 
         this.newGame(map, rules);
 
-        this.ready =false;
-        this.once('nextRound', ()=>{
-            this.ready=true;
+        this.ready = false;
+        this.once('nextRound', () => {
+            console.log('ready is now true');
+            this.ready = true;
         });
+
+        this.start();
     }
 
     start(e) {
+        console.log('start called', this.ready);
         if (e) e.preventDefault();
+        if (!this.ready) {
+            this.once('nextRound', () => setTimeout(() => this.start(), 5));
+            return;
+        }
 
-        this.once('nextRound', ()=>{
-            console.log("next round");
-        });
         this.hideGameRuleSelection();
+
+        let form = game.element.querySelector('form');
+        let [roundCount, timeLimit, moveLimit, panZoomAllowed] = [...new FormData(form)].map(n => n[1]);
+        let rules = { roundCount, timeLimit, moveLimit, panZoomAllowed };
+        this.rules = rules;
+
+        //start timer
+        //set sv element restrictions
+        // Pan (Done)
+        // Zoom
+        // Move
     }
 
     hideGameRuleSelection() {
-        document.querySelector(".gamerule-selector").style.transform = 'translateY(-100%)';
+        let element = document.querySelector(".gamerule-selector");
+        element.style.transform = `translateY(-${element.offsetHeight}px)`;
     }
 
     attachMap(selector) {
@@ -55,11 +72,10 @@ class Game {
     }
 
     toggleMapOverlay() {
-        if (this.map.polygon.getMap()) {
+        if (this.map.polygon.getMap())
             this.map.polygon.setMap(null);
-        } else {
+        else
             this.map.polygon.setMap(this.googleMap);
-        }
     }
 
     setResizeEventListeners() {
@@ -227,7 +243,6 @@ class Game {
 
         // Check if next destination is loaded
         if (!this.mapLoaded) {
-            console.log("Waiting for map to load");
             this.once('preload', () => this.nextRound());
             return;
         }
@@ -239,8 +254,6 @@ class Game {
             this.preloadNextMap();
 
         setTimeout(() => {
-            console.log("firing next round");
-            console.log(this.events);
             this.fire('nextRound');
             this.removeOverviewLines();
             this.attachMap('.embed-map');
@@ -372,20 +385,18 @@ class Game {
     }
 
     preloadNextMap() {
-        console.log("Loading new location");
         this.mapLoaded = false;
         this.streetview.randomValidLocation(this.zoom).then(next => {
             this.nextDestination = next;
             this.mapLoaded = true;
-            console.log("New location found!");
             this.fire('preload');
         });
     }
 
     fire(event) {
         if (this.events[event]) {
-            for (let callback of this.events[event]) {
-                callback();
+            for (let i = this.events[event].length - 1; i >= 0; i--) {
+                this.events[event][i]();
             }
         }
     }
@@ -399,8 +410,7 @@ class Game {
     }
 
     on(event, callback) {
-        if (!this.events[event]){
-            console.log("resetting events for"+event);
+        if (!this.events[event]) {
             this.events[event] = [];
         }
         this.events[event].push(callback);

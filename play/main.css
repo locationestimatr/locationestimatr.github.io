@@ -31,7 +31,8 @@ body {
     left: 0;
     width: calc(100% - 40px);
     background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
-    height: calc(100% - 40px);
+    background-attachment: fixed;
+    min-height: calc(100% - 40px);
     z-index: 7;
     color: white;
     transition: transform 0.3s ease-in-out;

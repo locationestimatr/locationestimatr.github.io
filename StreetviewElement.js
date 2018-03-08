@@ -3,6 +3,36 @@ class StreetviewElement {
         this.element = element;
     }
 
+    restrictPan() {
+        this.element.querySelector('.gm-compass').style.display = 'none';
+        this.element.querySelector('.widget-scene').style.pointerEvents = 'none';
+    }
+
+    allowPan() {
+        this.element.querySelector('.gm-compass').style.display = 'block';
+        this.element.querySelector('.widget-scene').style.pointerEvents = 'all';
+    }
+
+    restrictZoom() {
+        this.element.querySelector('div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom > div.gmnoprint > div').style.display = 'none';
+        this.panorama.setOptions({scrollwheel:false});
+    }
+
+    allowZoom() {
+        this.element.querySelector('div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom > div.gmnoprint > div').style.display = 'block';
+        this.panorama.setOptions({scrollwheel:true});
+    }
+
+    restrictMove() {
+        this.panorama.setOptions({linksControl:false});
+        this.panorama.setOptions({clickToGo:false});
+    }
+
+    allowMove() {
+        this.panorama.setOptions({linksControl:true});
+        this.panorama.setOptions({clickToGo:true});
+    }
+
     setLocation(lat, lon) {
         if (this.panorama !== undefined) {
             this.panorama.setPosition({ lat: lat, lng: lon });
@@ -17,7 +47,7 @@ class StreetviewElement {
                     showRoadLabels: false,
                     motionTracking: false,
                     fullscreenControl: false,
-                    // motionTrackingControl: false,
+                    motionTrackingControl: false
                 });
         }
     }
