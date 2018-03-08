@@ -55,7 +55,7 @@
             <label class="number-picker">
                 <p>Time limit</p>
                 <p class="hint">-1 = infinite</p>
-                <input type="number" name='time-limit' class='button' value="60">
+                <input type="number" name='time-limit' class='button' value="-1">
                 <span>Seconds</span>
             </label>
             <label class="number-picker">
@@ -66,9 +66,9 @@
             </label>
             <div class="radio-picker pan-radio">
                 <p>Zooming and panning</p>
-                <input type="checkbox" name="pan-allowed" value="pan" id="yes" checked>
+                <input type="checkbox" name="allowed" value="pan" id="yes" checked>
                 <label class="radio-choice" for="yes">Pan</label>
-                <input type="checkbox" name="pan-allowed" value="zoom" id="no" checked>
+                <input type="checkbox" name="allowed" value="zoom" id="no" checked>
                 <label class="radio-choice" for="no">Zoom</label>
             </div>
             <input type="submit" class="button" value="Start Game" onclick="game.setRules(event)">

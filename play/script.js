@@ -1,11 +1,8 @@
 // Todo:
-// Custom games (hoeveelheid rondes, tijdlimiet per ronde, gelimiteerde moves, gelimiteerde panning en zoom)
-// Homepage met game rules
 // Map editor maken
 // Style return home button
 // Photosphere gamemode toevoegen
 // Load size van voorpagina verminderen
-// zooming and panning apart als regels doen misschien
 
 distribution = { weighted: 0, uniform: 1 }
 
