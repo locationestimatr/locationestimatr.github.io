@@ -5,20 +5,24 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35913371-9"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-35913371-9');
     </script>
-    <meta charset='utf-8' />
+    <meta charset='utf-8'/>
     <title>Location Estimatr</title>
     <meta name='theme-color' content='#6e45e2'>
     <meta name='mobile-web-app-capable' content='yes'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel='icon' sizes='192x192' href='../img/favicon.png'>
     <link rel='shortcut icon' type='image/png' href='../img/favicon.png'> -->
-    <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
     <!-- Favicon moet 192x192 zijn -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
     <link rel='stylesheet' href='main.css'>
@@ -31,73 +35,79 @@
 </head>
 
 <body>
-    <div class='estimator'>
-        <div class="gamerule-selector">
-            <h2>Rules</h2>
-            <form>
-                <div class="radio-picker">
-                    <p>Round count</p>
-                    <input type="radio" name="round-count" value="1" id="1round">
-                    <label class="radio-choice" for="1round">1</label>
-                    <input type="radio" name="round-count" value="2" id="2round">
-                    <label class="radio-choice" for="2round">2</label>
-                    <input type="radio" name="round-count" value="3" id="3round">
-                    <label class="radio-choice" for="3round">3</label>
-                    <input type="radio" name="round-count" value="4" id="4round">
-                    <label class="radio-choice" for="4round">4</label>
-                    <input type="radio" name="round-count" value="5" id="5round" checked>
-                    <label class="radio-choice" for="5round">5</label>
-                </div>
-                <label class="number-picker">
-                    <p>Time limit</p>
-                    <p class="hint">0 = infinite</p>
-                    <input type="number" name='time-limit' class='button' value="0">
-                    <span>Seconds</span>
-                </label>
-                <label class="number-picker">
-                    <p>Move limit</p>
-                    <p class="hint">0 = infinite</p>
-                    <input type="number" name='move-limit' class='button' value="0">
-                    <span>Moves</span>
-                </label>
-                <div class="radio-picker pan-radio">
-                    <p>Zooming and panning allowed</p>
-                    <input type="radio" name="pan-allowed" value="true" id="yes" checked>
-                    <label class="radio-choice" for="yes">Yes</label>
-                    <input type="radio" name="pan-allowed" value="false" id="no">
-                    <label class="radio-choice" for="no">No</label>
-                </div>
-                <input type="submit" class="button" value="Start Game" onclick="game.start(event)">
-            </form>
-        </div>
-        <div class="map-element"></div>
-        <div class="guess-overview">
-            <div class="overview-map"></div>
-            <div class="score-view">
-                <div class="score-progress-bar">
-                    <div class="score-progress"></div>
-                </div>
-                <div class="score-text">
-                    <p>Your guess is 0 cm removed from your start location</p>
-                    <p>You scored ∞ points</p>
-                </div>
-                <div class="button next-round-button" onclick="game.nextRoundButton()">Next Round</div>
-                <div class="game-end-buttons">
-                    <div class="button play-again-button" onclick="game.newGame()">Play Again</div>
-                    <div class="button home-button" onclick="goHome()">Choose Another Map</div>
-                </div>
+<div class='estimator'>
+    <div class="gamerule-selector">
+        <h2>Rules</h2>
+        <form>
+            <div class="radio-picker">
+                <p>Round count</p>
+                <input type="radio" name="round-count" value="1" id="1round">
+                <label class="radio-choice" for="1round">1</label>
+                <input type="radio" name="round-count" value="2" id="2round">
+                <label class="radio-choice" for="2round">2</label>
+                <input type="radio" name="round-count" value="3" id="3round">
+                <label class="radio-choice" for="3round">3</label>
+                <input type="radio" name="round-count" value="4" id="4round">
+                <label class="radio-choice" for="4round">4</label>
+                <input type="radio" name="round-count" value="5" id="5round" checked>
+                <label class="radio-choice" for="5round">5</label>
+            </div>
+            <label class="number-picker">
+                <p>Time limit</p>
+                <p class="hint">-1 = infinite</p>
+                <input type="number" name='time-limit' class='button' value="-1">
+                <span>Seconds</span>
+            </label>
+            <label class="number-picker">
+                <p>Move limit</p>
+                <p class="hint">-1 = infinite</p>
+                <input type="number" name='move-limit' class='button' value="-1">
+                <span>Moves</span>
+            </label>
+            <div class="radio-picker pan-radio">
+                <p>Zooming and panning</p>
+                <input type="checkbox" name="pan-allowed" value="pan" id="yes" checked>
+                <label class="radio-choice" for="yes">Pan</label>
+                <input type="checkbox" name="pan-allowed" value="zoom" id="no" checked>
+                <label class="radio-choice" for="no">Zoom</label>
+            </div>
+            <input type="submit" class="button" value="Start Game" onclick="game.start(event)">
+        </form>
+    </div>
+    <div class="map-element"></div>
+    <div class="guess-overview">
+        <div class="overview-map"></div>
+        <div class="score-view">
+            <div class="score-progress-bar">
+                <div class="score-progress"></div>
+            </div>
+            <div class="score-text">
+                <p>Your guess is 0 cm removed from your start location</p>
+                <p>You scored ∞ points</p>
+            </div>
+            <div class="button next-round-button" onclick="game.nextRoundButton()">Next Round</div>
+            <div class="game-end-buttons">
+                <div class="button play-again-button" onclick="game.newGame()">Play Again</div>
+                <div class="button home-button" onclick="goHome()">Choose Another Map</div>
             </div>
         </div>
-        <div class="return-home" onclick="game.returnHome()"></div>
-        <div class="guess-map">
-            <div class="toggle-map-overlay" onclick="game.toggleMapOverlay()"></div>
-            <div class="guess-map-resizer"></div>
-            <div class="embed-map"></div>
-            <div class="guess-button" onclick="game.makeGuess()">Make Guess</div>
-        </div>
-        <div class="streetview"></div>
     </div>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgTAL1XKBxQmkdz-FUItoNAqkN4QdoBbk&callback=init&libraries=geometry"></script>
+    <div class="info-view">
+        <div class="total-score">Score: <b>19287</b></div>
+        <div class="time-left">Time: <b>10.5</b></div>
+        <div class="moves-left">Moves: <b>5</b></div>
+    </div>
+    <div class="return-home" onclick="game.returnHome()"></div>
+    <div class="guess-map">
+        <div class="toggle-map-overlay" onclick="game.toggleMapOverlay()"></div>
+        <div class="guess-map-resizer"></div>
+        <div class="embed-map"></div>
+        <div class="guess-button" onclick="game.makeGuess()">Make Guess</div>
+    </div>
+    <div class="streetview"></div>
+</div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgTAL1XKBxQmkdz-FUItoNAqkN4QdoBbk&callback=init&libraries=geometry"></script>
 </body>
 
 </html>

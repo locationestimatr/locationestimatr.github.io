@@ -1,20 +1,22 @@
 class Game {
-    constructor(map, element, rules = { roundCount: 5, distribution: distribution.weighted }) {
+    constructor(map, element, rules = {roundCount: 5, distribution: distribution.weighted}) {
         this.element = element;
-        this.svElement = new StreetviewElement(element.querySelector('.streetview'));
+        this.svElement = new StreetviewElement(element.querySelector('.streetview'), element.querySelector('.return-home'));
+
+        this.scoreElement = element.querySelector('.total-score b');
+        this.timeElement = element.querySelector('.time-left b');
+        this.movesElement = element.querySelector('.moves-left b');
 
         this.googleMap = new google.maps.Map(element.querySelector('.map-element'), {
             zoom: 0,
-            center: { lat: 0, lng: 0 },
+            center: {lat: 0, lng: 0},
             disableDefaultUI: true,
             clickableIcons: false,
             backgroundColor: '#aadaff',
             fullscreenControl: false,
         });
         this.attachMap('.embed-map');
-        google.maps.event.addListener(this.googleMap, 'click',
-            e => this.placeGuessMarker(e.latLng)
-        );
+        google.maps.event.addListener(this.googleMap, 'click', e => this.placeGuessMarker(e.latLng));
 
         // this.googleMap = new google.maps.Map(element.querySelector('.overview-map'), {
         //     zoom: 2,
@@ -49,15 +51,40 @@ class Game {
         this.hideGameRuleSelection();
 
         let form = game.element.querySelector('form');
-        let [roundCount, timeLimit, moveLimit, panZoomAllowed] = [...new FormData(form)].map(n => n[1]);
-        let rules = { roundCount, timeLimit, moveLimit, panZoomAllowed };
+        let [roundCount, timeLimit, moveLimit, ...restrictions] = [...new FormData(form)].map(n => n[1]);
+        let rules = {roundCount, timeLimit, moveLimit};
+        rules.panAllowed = restrictions.includes('pan');
+        rules.zoomAllowed = restrictions.includes('zoom');
         this.rules = rules;
 
-        //start timer
-        //set sv element restrictions
-        // Pan (Done)
-        // Zoom
-        // Move
+        console.log(rules);
+
+        this.applyRules();
+    }
+
+    applyRules() {
+        if (!this.rules.panAllowed)
+            this.svElement.restrictPan();
+
+        if (!this.rules.zoomAllowed)
+            this.svElement.restrictZoom();
+
+        if (+this.rules.moveLimit !== -1)
+            this.svElement.setMoveLimit(+this.rules.moveLimit, this.movesElement);
+
+        if (+this.rules.timeLimit !== -1)
+            this.startTimer(+this.rules.timeLimit);
+    }
+
+    startTimer(seconds) {
+        this.timeElement.innerText = seconds;
+        setTimeout(() => {
+            this.makeGuess();
+        }, seconds * 1000);
+        setInterval(()=>{
+            seconds -= 0.1;
+            this.timeElement.textContent = Math.round(seconds);
+        },100);
     }
 
     hideGameRuleSelection() {
@@ -270,8 +297,8 @@ class Game {
     }
 
     addOverviewLine(guess, actual, animationTime = 1500) {
-        guess = { lat: guess[0], lng: guess[1] };
-        actual = { lat: actual[0], lng: actual[1] };
+        guess = {lat: guess[0], lng: guess[1]};
+        actual = {lat: actual[0], lng: actual[1]};
 
         let lineData = {};
         this.overviewLines.push(lineData);
@@ -346,7 +373,7 @@ class Game {
 
     makeGuess() {
         if (this.marker === undefined)
-            return;
+            this.placeGuessMarker({lat: 0, lng: 0});
         this.marker.setMap(null);
 
         let guessLocation = [this.marker.position.lat(), this.marker.position.lng()];
