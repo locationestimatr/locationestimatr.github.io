@@ -206,6 +206,22 @@
             "Vatican City"
         ]
     },
+    "southeastasia":{
+        "type":"collection",
+        "countries":[
+            "Singapore",
+            "Brunei",
+            "Malaysia",
+            "Thailand",
+            "Indonesia",
+            "Philippines",
+            "Vietnam",
+            "Myanmar",
+            "Laos",
+            "Timor-Leste",
+            "Cambodia"
+        ]
+    },
     "asia": {
         "type": "collection",
         "countries": [
