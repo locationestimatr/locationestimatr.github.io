@@ -29,6 +29,7 @@ body {
     left: calc(50% - 230px);
     width: 510px;
     z-index: 5;
+    max-width: 100%;
     text-align: center;
     margin: 5px;
     padding: 15px;
@@ -61,9 +62,10 @@ body {
     width: calc(100% - 40px);
     background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
     background-attachment: fixed;
-    min-height: calc(100% - 40px);
+    height: calc(100% - 40px);
     z-index: 7;
     color: white;
+    overflow-y: auto;
     transition: transform 0.3s ease-in-out;
 }
 
