@@ -26,10 +26,10 @@ body {
 .info-view {
     position: absolute;
     top: 0;
-    left: calc(50% - 230px);
+    left: calc(50% - 275px);
     width: 510px;
+    max-width: calc(100% - 30px);
     z-index: 5;
-    max-width: 100%;
     text-align: center;
     margin: 5px;
     padding: 15px;
