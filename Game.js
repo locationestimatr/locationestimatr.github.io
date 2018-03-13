@@ -251,7 +251,7 @@ class Game {
         this.fitMap(locations);
 
         setTimeout(() => {
-            overviewElement.querySelector('.score-progress').style.width = (score / maxScore * 100) + '%';
+            overviewElement.querySelector('.score-progress').style.width = (totalScore / maxScore * 100) + '%';
             for (let result of this.previousGuesses)
                 this.addOverviewLine(result.guess, result.actual, 600);
         }, 300);
