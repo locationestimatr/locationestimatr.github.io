@@ -1,5 +1,11 @@
 class Game {
-    constructor(map, element, rules = {roundCount: 5, distribution: distribution.weighted}) {
+    constructor(map, element, rules = {
+        roundCount: 5,
+        moveLimit: -1,
+        panAllowed: true,
+        timeLimit: -1,
+        zoomAllowed: true
+    }) {
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector('.streetview'), element.querySelector('.return-home'));
 
@@ -7,6 +13,8 @@ class Game {
         this.timeElement = element.querySelector('.time-left');
         this.movesElement = element.querySelector('.moves-left');
         this.roundElement = element.querySelector('.round');
+
+        this.scores = new Scores();
 
         this.googleMap = new google.maps.Map(element.querySelector('.map-element'), {
             zoom: 0,
@@ -41,6 +49,24 @@ class Game {
         });
     }
 
+    async uploadScore(e) {
+        if (e) e.preventDefault();
+
+        let username = this.element.querySelector('.username-input').value;
+        if (this.latestScore) {
+            this.latestScore.user = username;
+            this.scores.addLocal(this.latestScore);
+            await this.scores.addGlobal(this.latestScore);
+        }
+
+        location.href = '../highscore/#' + this.map.name;
+    }
+
+    async logHighScores() {
+        let scores = await this.scores.getGlobalHighScores(this.map.name, this.rules);
+        console.log(scores);
+    }
+
     setRules(e) {
         console.log('set rules called', this.ready);
         if (e) e.preventDefault();
@@ -56,6 +82,7 @@ class Game {
         let rules = {roundCount: +roundCount, timeLimit: +timeLimit, moveLimit: +moveLimit};
         rules.panAllowed = restrictions.includes('pan');
         rules.zoomAllowed = restrictions.includes('zoom');
+        console.log(rules);
         this.rules = rules;
 
         setTimeout(() => this.applyRules(), 300);
@@ -137,10 +164,10 @@ class Game {
         };
         let onDown = () => {
             resizerDown = true;
-        }
+        };
         let onUp = () => {
             resizerDown = false;
-        }
+        };
 
         resizeElement.addEventListener('mousedown', () => onDown());
         document.addEventListener('mousemove', e => onMove(e.pageX, e.pageY));
@@ -191,7 +218,6 @@ class Game {
 
     showOverview(guess, actual) {
         this.attachMap('.overview-map');
-
 
         let distance = this.measureDistance(guess, actual);
         let niceDistance = this.formatDistance(distance);
@@ -249,6 +275,13 @@ class Game {
 
         let locations = this.previousGuesses.map(result => result.guess).concat(this.previousGuesses.map(result => result.actual));
         this.fitMap(locations);
+
+        this.latestScore = {
+            totalScore,
+            map: this.map.name,
+            rules: this.rules,
+            date: +new Date()
+        };
 
         setTimeout(() => {
             overviewElement.querySelector('.score-progress').style.width = (totalScore / maxScore * 100) + '%';

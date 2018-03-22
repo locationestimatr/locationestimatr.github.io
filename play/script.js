@@ -4,7 +4,7 @@
 // Photosphere gamemode toevoegen
 // Load size van voorpagina verminderen
 
-distribution = { weighted: 0, uniform: 1 }
+distribution = {weighted: 0, uniform: 1};
 
 async function init() {
     let map = decodeURI(location.hash.substring(1));

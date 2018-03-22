@@ -32,6 +32,7 @@
     <script src='../Game.js' type='text/javascript'></script>
     <script src='../StreetviewElement.js' type='text/javascript'></script>
     <script src='../MapManager.js' type='text/javascript'></script>
+    <script src='../Scores.js' type='text/javascript'></script>
 </head>
 
 <body>
@@ -87,6 +88,11 @@
             </div>
             <div class="button next-round-button" onclick="game.nextRoundButton()">Next Round</div>
             <div class="game-end-buttons">
+                <form class="high-score-form" onsubmit="game.uploadScore(event)">
+                    <p>Submit to scoreboard to see other high scores</p>
+                    <input pattern=".{3,}" class="username-input" placeholder="Username" required title="3 characters minimum">
+                    <input type="submit" value="Submit" class="button submit-button">
+                </form>
                 <div class="button play-again-button" onclick="game.playAgain();">Play Again</div>
                 <div class="button home-button" onclick="goHome()">Choose Another Map</div>
             </div>
@@ -107,6 +113,19 @@
     </div>
     <div class="streetview"></div>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-firestore.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAgHtAPmTMr99y5rISmvYnfwLVdfmH8Zew",
+        authDomain: "guessthegeo.firebaseapp.com",
+        projectId: 'guessthegeo',
+        databaseURL: "https://guessthegeo.firebaseio.com",
+    };
+    firebase.initializeApp(config);
+</script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgTAL1XKBxQmkdz-FUItoNAqkN4QdoBbk&callback=init&libraries=geometry"></script>
 </body>

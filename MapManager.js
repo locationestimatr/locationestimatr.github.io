@@ -31,7 +31,7 @@ class MapManager {
 
         let minimumDistanceForPoints = Math.sqrt(area) * 2;
 
-        return new GeoMap(poly, minimumDistanceForPoints)
+        return new GeoMap(poly, minimumDistanceForPoints, key);
     }
 
     kmlsToPolygon(...kmls) {

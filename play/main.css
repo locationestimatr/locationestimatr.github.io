@@ -202,7 +202,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 .overview-map {
     width: calc(100% - 40px);
     position: absolute !important;
-    height: calc(100% - 290px);
+    height: calc(100% - 367px);
     border-radius: 20px;
     box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.3);
     margin: 20px;
@@ -212,7 +212,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 250px;
+    height: 330px;
     text-align: center;
 }
 
@@ -222,7 +222,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-color: #0000004d;
 }
 
-.score-text p {
+.score-view p {
     color: rgba(255, 255, 255, 0.8);
     font-weight: 400 !important;
     padding: 5px;
@@ -253,8 +253,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     background-color: #deffeb;
     padding: 15px 50px;
     border-radius: 4px;
-    color: #000000cf;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+    color: #000000cf;
     font-weight: bold;
     cursor: pointer;
     transition: 0.1s;
@@ -270,6 +270,22 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 .game-end-buttons .button {
     margin-bottom: 15px;
+    border: none;
+}
+
+.game-end-buttons input[type='submit'] {
+    font-size: inherit;
+}
+
+.username-input{
+    border: none;
+    margin-bottom: 15px;
+    padding: 15px;
+    font-size: inherit;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
+    color: #000000cf;
 }
 
 .guess-map {

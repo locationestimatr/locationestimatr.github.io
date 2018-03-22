@@ -1,8 +1,9 @@
 class GeoMap {
-    constructor(polygon, minimumDistanceForPoints) {
+    constructor(polygon, minimumDistanceForPoints, name) {
         console.log(minimumDistanceForPoints);
         this.minimumDistanceForPoints = minimumDistanceForPoints;
         this.maxScore = 5000;
+        this.name = name;
 
         this.polygon = polygon;
     }
