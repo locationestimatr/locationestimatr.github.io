@@ -62,8 +62,8 @@ class Game {
             await this.scores.addGlobal(this.latestScore);
         }
 
-        console.log('redirect now');
-        // location.href = '../highscore/#' + this.map.name;
+        // console.log('redirect now');
+        location.href = '../highscore/#' + this.map.name;
     }
 
     async logHighScores() {

@@ -3,6 +3,9 @@
 // Style return home button
 // Photosphere gamemode toevoegen
 // Load size van voorpagina verminderen
+// Keuze voor distributed of niet
+// High score data stijlen
+// Database access veilig maken
 
 distribution = {weighted: 0, uniform: 1};
 
