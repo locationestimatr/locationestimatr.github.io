@@ -31,7 +31,7 @@ class Scores {
 
     getLocalHighScores(map, rules, n = 10) {
         return this.localScores
-            // .filter(score => this.equals(score, rules))
+        // .filter(score => this.equals(score, rules))
             .filter(score => score.map === map)
             .sort((a, b) => b.totalScore - a.totalScore)
             .slice(0, n);
@@ -45,7 +45,7 @@ class Scores {
         return true;
     }
 
-    saveLocal(object = this.value) {
+    saveLocal(object = this.localScores) {
         localStorage[this.key] = JSON.stringify(object);
     }
 
@@ -55,7 +55,7 @@ class Scores {
     }
 
     addGlobal(score) {
-        this.db.collection('scores').add(score);
+        return this.db.collection('scores').add(score);
     }
 
     getLocalScores() {

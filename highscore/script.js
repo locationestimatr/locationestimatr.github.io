@@ -30,7 +30,11 @@ async function init() {
 
     let globalScoreElement = document.querySelector('.global-high-score');
     let globalHighScores = await scores.getGlobalHighScores(map, rules.default);
-    displayScores(globalScoreElement, globalHighScores);
+    if (globalHighScores.length === 0) {
+        globalScoreElement.innerText = `There are no scores on "${map}" yet`;
+    } else {
+        displayScores(globalScoreElement, globalHighScores);
+    }
 
     allScores = [...globalHighScores, ...localScores];
 
@@ -40,14 +44,14 @@ async function init() {
 function deselectScore() {
     let scoreElements = document.querySelectorAll('.score');
     for (let scoreElement of scoreElements) {
-        scoreElement.querySelector('.rules').style.display = 'none';
+        scoreElement.querySelector('.hidden').style.display = 'none';
     }
 }
 
 function showScore(e) {
     e.stopPropagation();
     deselectScore();
-    e.target.querySelector('.rules').style.display = 'block';
+    e.target.querySelector('.hidden').style.display = 'block';
 }
 
 function displayScores(element, scores) {
@@ -57,7 +61,10 @@ function displayScores(element, scores) {
             <li class="score" onclick="showScore(event)">
                 <div class="user">${score.user}</div>
                 <div class="total-score">${score.totalScore}</div>
-                <div class="rules">${JSON.stringify(score.rules)}</div>
+                <div class="hidden">
+                    <div class="individual-scores">${JSON.stringify(score.individualScores)}</div>
+                    <div class="rules">${JSON.stringify(score.rules)}</div>
+                </div>
             </li>
         `;
     }

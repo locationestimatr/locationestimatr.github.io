@@ -6,6 +6,7 @@ class Game {
         timeLimit: -1,
         zoomAllowed: true
     }) {
+        this.distribution = distribution.weighted;
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector('.streetview'), element.querySelector('.return-home'));
 
@@ -52,6 +53,8 @@ class Game {
     async uploadScore(e) {
         if (e) e.preventDefault();
 
+        console.log(this);
+
         let username = this.element.querySelector('.username-input').value;
         if (this.latestScore) {
             this.latestScore.user = username;
@@ -59,7 +62,8 @@ class Game {
             await this.scores.addGlobal(this.latestScore);
         }
 
-        location.href = '../highscore/#' + this.map.name;
+        console.log('redirect now');
+        // location.href = '../highscore/#' + this.map.name;
     }
 
     async logHighScores() {
@@ -188,7 +192,7 @@ class Game {
 
         if (map !== false) {
             this.map = map;
-            this.streetview = new Streetview(map, this.rules.distribution);
+            this.streetview = new Streetview(map, this.distribution);
         }
 
         this.zoom = 14;
@@ -280,6 +284,7 @@ class Game {
             totalScore,
             map: this.map.name,
             rules: this.rules,
+            individualScores: this.previousGuesses.map(guess => guess.score),
             date: +new Date()
         };
 

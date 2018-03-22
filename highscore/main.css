@@ -46,14 +46,14 @@ body {
     text-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
 }
 
-.user, .total-score{
+.user, .total-score {
     display: inline-block;
     pointer-events: none;
 }
 
-.rules {
+.hidden {
     display: none;
-    width:100%;
+    width: 100%;
 }
 
 .user {
@@ -62,6 +62,10 @@ body {
 
 .score:first-child {
     box-shadow: none !important;
+}
+
+.score > div {
+    pointer-events: none;
 }
 
 .score {
