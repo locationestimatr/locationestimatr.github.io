@@ -13,7 +13,7 @@ class Scores {
         this.db = firebase.firestore();
     }
 
-    async getGlobalHighScores(map, rules, n = 10) {
+    async getGlobalHighScores(map, rules, n = 20) {
         let records = await this.db
             .collection('scores')
             .where('map', '==', map)
