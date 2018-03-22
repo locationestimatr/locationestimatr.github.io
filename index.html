@@ -5,12 +5,16 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35913371-9"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'UA-35913371-9');
     </script>
-    <meta charset='utf-8' />
+    <meta charset='utf-8'/>
     <title>Location Estimatr</title>
     <meta name='theme-color' content='#3cba92'>
     <meta name='mobile-web-app-capable' content='yes'>
@@ -26,60 +30,120 @@
 </head>
 
 <body>
-    <div class="front-page">
-        <h1>Location Estimatr</h1>
-        <div class="maps">
-            <h2>Official Maps</h2>
-            <div class="kml-maps map-container">
-                <a class="map" href=./play#world>
-                    <div class="map-background" style="background-image:url(data/thumbnails/world.jpg)"></div>
+<div class="front-page">
+    <h1>Location Estimatr</h1>
+    <div class="maps">
+        <h2>Official Maps</h2>
+        <div class="kml-maps map-container">
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/world.jpg)"></div>
+                <div class="map-text">
                     <div class="map-title">World</div>
-                </a>
-            </div>
-            <h2>Country Collection Maps</h2>
-            <div class="collection-maps map-container">
-                <a class="map" href=./play#eu>
-                    <div class="map-background" style="background-image:url(data/thumbnails/eu.jpg)"></div>
-                    <div class="map-title">EU</div>
-                </a>
-                <a class="map" href=./play#benelux>
-                    <div class="map-background" style="background-image:url(data/thumbnails/benelux.jpg)"></div>
-                    <div class="map-title">Benelux</div>
-                </a>
-                <a class="map" href=./play#africa>
-                    <div class="map-background" style="background-image:url(data/thumbnails/africa.jpg)"></div>
-                    <div class="map-title">Africa</div>
-                </a>
-                <a class="map" href=./play#northamerica>
-                    <div class="map-background" style="background-image:url(data/thumbnails/northamerica.jpg)"></div>
-                    <div class="map-title">North America</div>
-                </a>
-                <a class="map" href=./play#southamerica>
-                    <div class="map-background" style="background-image:url(data/thumbnails/southamerica.jpg)"></div>
-                    <div class="map-title">South America</div>
-                </a>
-                <a class="map" href=./play#europe>
-                    <div class="map-background" style="background-image:url(data/thumbnails/europe.jpg)"></div>
-                    <div class="map-title">Europe</div>
-                </a>
-                <a class="map" href=./play#asia>
-                    <div class="map-background" style="background-image:url(data/thumbnails/asia.jpg)"></div>
-                    <div class="map-title">Asia</div>
-                </a>
-                <a class="map" href=./play#southeastasia>
-                    <div class="map-background" style="background-image:url(data/thumbnails/southeastasia.jpg)"></div>
-                    <div class="map-title">Southeast Asia</div>
-                </a>
-                <a class="map" href=./play#oceania>
-                    <div class="map-background" style="background-image:url(data/thumbnails/oceania.jpg)"></div>
-                    <div class="map-title">Oceania</div>
-                </a>
-            </div>
-            <h2>Country Maps</h2>
-            <div class="country-maps map-container">
+                    <div class="map-actions">
+                        <a href=./play#world class="map-play">Play</a>
+                        <a href=./highscore#world class="map-score">Scores</a>
+                    </div>
+                </div>
             </div>
         </div>
+        <h2>Country Collection Maps</h2>
+        <div class="collection-maps map-container">
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/european_union.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">European Union</div>
+                    <div class="map-actions">
+                        <a href=./play#european_union class="map-play">Play</a>
+                        <a href=./highscore#european_union class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/benelux.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">Benelux</div>
+                    <div class="map-actions">
+                        <a href=./play#benelux class="map-play">Play</a>
+                        <a href=./highscore#benelux class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/africa.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">Africa</div>
+                    <div class="map-actions">
+                        <a href=./play#africa class="map-play">Play</a>
+                        <a href=./highscore#africa class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/north_america.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">North America</div>
+                    <div class="map-actions">
+                        <a href=./play#north_america class="map-play">Play</a>
+                        <a href=./highscore#north_america class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/south_america.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">South America</div>
+                    <div class="map-actions">
+                        <a href=./play#south_america class="map-play">Play</a>
+                        <a href=./highscore#south_america class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/europe.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">Europe</div>
+                    <div class="map-actions">
+                        <a href=./play#europe class="map-play">Play</a>
+                        <a href=./highscore#europe class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/asia.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">Asia</div>
+                    <div class="map-actions">
+                        <a href=./play#asia class="map-play">Play</a>
+                        <a href=./highscore#asia class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/south_east_asia.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">South East Asia</div>
+                    <div class="map-actions">
+                        <a href=./play#south_east_asia class="map-play">Play</a>
+                        <a href=./highscore#south_east_asia class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/oceania.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">Oceania</div>
+                    <div class="map-actions">
+                        <a href=./play#oceania class="map-play">Play</a>
+                        <a href=./highscore#oceania class="map-score">Scores</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>Country Maps</h2>
+        <div class="country-maps map-container">
+        </div>
     </div>
+</div>
 </body>
 
 </html>

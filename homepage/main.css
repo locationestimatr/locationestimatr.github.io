@@ -30,7 +30,7 @@ body {
     margin-bottom: 3em;
 }
 
-.front-page>h1 {
+.front-page > h1 {
     font-size: 5em;
     padding: 2em 0em;
 }
@@ -39,7 +39,7 @@ body {
     font-size: 1.8em;
     padding: 1em 0em;
     text-shadow: 0 0 1em rgba(0, 0, 0, 0.57);
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
     margin: 1em 0;
 }
 
@@ -65,48 +65,69 @@ body {
     display: inline-grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 2em;
-    grid-auto-rows: minmax(10em, auto);
+    grid-auto-rows: minmax(15em, auto);
     max-width: 1200px;
     width: 90%;
 }
 
 .map {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     border-radius: 0.7em;
     box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.2);
     height: 100%;
-    cursor: pointer;
-    transition:0.15s;
+    color: rgba(255, 255, 255, 0.82);
+    transition: 0.15s;
 }
-.map:hover{
-    transform: scale(1.1);
-    box-shadow: 0 0 3em 0 rgba(0,0,0,0.5);
+
+.map-text {
+    padding: 15px;
+}
+
+.map-actions {
+    text-align: left;
+    position: relative;
+    bottom: -1em;
+}
+
+.map-actions a {
+    color: #1ca56f;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 0.8em;
+    padding: 6px;
+    border-radius: 3px;
+    transition: 0.1s;
+}
+
+.map-actions a:hover {
+    background-color: rgba(28, 165, 111, 0.2);
+    color: #40d298;
+}
+
+.map-actions a:active {
+    background-color: rgba(28, 165, 111, 0.35);
 }
 
 .map-title {
     pointer-events: none;
-    height: 2.3em;
-    width: 100%;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 2.3em;
     font-weight: bold;
-    font-size: 1em;
+    text-align: left;
+    font-size: 1.2em;
     position: relative;
-    top: -2.3em;
-    background-color: rgba(0, 0, 0, 0.8);
     border-bottom-right-radius: 0.7em;
     border-bottom-left-radius: 0.7em;
 }
 
 .map-background {
     pointer-events: none;
-    height:100%;
+    height: calc(100% - 95px);
     width: 100%;
-    background-position: center;
+    background: no-repeat center;
     background-size: cover;
-    background-repeat: no-repeat;
     display: inline-block;
-    border-radius: 0.7em;
+    border-top-right-radius: 0.7em;
+    border-top-left-radius: 0.7em;
 }
 
 ::-webkit-scrollbar {

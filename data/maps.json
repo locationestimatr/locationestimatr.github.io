@@ -3,7 +3,7 @@
         "type": "kml",
         "file": "world.kml"
     },
-    "eu": {
+    "european_union": {
         "type": "collection",
         "countries": [
             "Austria",
@@ -104,7 +104,7 @@
             "Zimbabwe"
         ]
     },
-    "northamerica": {
+    "north_america": {
         "type": "collection",
         "countries": [
             "Antigua and Barbuda",
@@ -133,7 +133,7 @@
             "Greenland"
         ]
     },
-    "southamerica": {
+    "south_america": {
         "type": "collection",
         "countries": [
             "Argentina",
@@ -206,7 +206,7 @@
             "Vatican City"
         ]
     },
-    "southeastasia":{
+    "south_east_asia":{
         "type":"collection",
         "countries":[
             "Singapore",
