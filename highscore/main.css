@@ -94,13 +94,36 @@ body {
     pointer-events: none;
 }
 
+.individual-scores {
+    margin-left: 20px;
+}
+
+.hidden h4 {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.score[active] .hidden {
+    display: block;
+}
+
 .hidden {
-    display: none;
     width: 100%;
+    display: none;
+}
+
+.score[active] .user, .score[active] .total-score {
+    font-size: 23px;
 }
 
 .user {
     font-weight: bold;
+    transition: 0.1s;
+}
+
+.total-score {
+    transition: 0.1s;
+    float: right;
 }
 
 .score:first-child {
@@ -121,13 +144,18 @@ body {
     margin-left: 25px;
 }
 
+.score[active] {
+    cursor: default;
+}
+
+.score[active]:hover {
+    background-color: transparent;
+    transform: scale(1);
+}
+
 .score:hover {
     background-color: rgba(0, 0, 0, 0.1);
     transform: scale(1.01);
-}
-
-.total-score {
-    float: right;
 }
 
 .score-list {

@@ -7,6 +7,8 @@
 // High score data stijlen
 // Database access veilig maken
 // Round 1/5 update niet naar echte round limiet
+// Show highscores in game summary laten zien
+// Eerst round overview dan gamee overview geven aan het eind van de game
 
 distribution = {weighted: 0, uniform: 1};
 

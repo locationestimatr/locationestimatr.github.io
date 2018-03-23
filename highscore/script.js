@@ -70,14 +70,14 @@ async function init() {
 function deselectScore() {
     let scoreElements = document.querySelectorAll('.score');
     for (let scoreElement of scoreElements) {
-        scoreElement.querySelector('.hidden').style.display = 'none';
+        scoreElement.removeAttribute('active');
     }
 }
 
 function showScore(e) {
     e.stopPropagation();
     deselectScore();
-    e.target.querySelector('.hidden').style.display = 'block';
+    e.target.setAttribute('active', '');
 }
 
 function displayScores(element, scores) {
@@ -88,8 +88,16 @@ function displayScores(element, scores) {
                 <div class="user">${score.user}</div>
                 <div class="total-score">${score.totalScore}</div>
                 <div class="hidden">
-                    <div class="individual-scores">${JSON.stringify(score.individualScores)}</div>
-                    <div class="rules">${JSON.stringify(score.rules)}</div>
+                    <h4>Round scores</h4>
+                    <ol class="individual-scores">${score.individualScores.map(s => `<li>${s}</li>`).join('')}</ol>
+                    <div class="rules">
+                        <h4>Game rules</h4>
+                        <p>Rounds: ${score.rules.roundCount}</p>
+                        <p>Time limit: ${score.rules.timeLimit === -1 ? '∞' : score.rules.timeLimit}<p>
+                        <p>Move limit: ${score.rules.moveLimit === -1 ? '∞' : score.rules.moveLimit}<p>
+                        <p>Zoom: ${score.rules.zoomAllowed ? 'allowed' : 'restricted'}<p>
+                        <p>Panning: ${score.rules.panAllowed ? 'allowed' : 'restricted'}<p>
+                    </div>
                 </div>
             </li>
         `;
