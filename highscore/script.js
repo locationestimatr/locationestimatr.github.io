@@ -82,8 +82,7 @@ function showScore(e) {
 
 function displayScores(element, scores) {
     let html = '';
-    for (let score of scores) {
-        html += `
+    for (let score of scores) html += `
             <li class="score" onclick="showScore(event)">
                 <div class="user">${score.user}</div>
                 <div class="total-score">${score.totalScore}</div>
@@ -101,6 +100,5 @@ function displayScores(element, scores) {
                 </div>
             </li>
         `;
-    }
     element.innerHTML = html;
 }
