@@ -6,6 +6,7 @@
 // Keuze voor distributed of niet
 // High score data stijlen
 // Database access veilig maken
+// Round 1/5 update niet naar echte round limiet
 
 distribution = {weighted: 0, uniform: 1};
 

@@ -32,6 +32,7 @@ class Streetview {
         }
 
         console.error("No blue pixel found");
+        return this.randomValidLocation(endZoom);
     }
 
     async randomValidTile(endZoom) {

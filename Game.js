@@ -6,6 +6,9 @@ class Game {
         timeLimit: -1,
         zoomAllowed: true
     }) {
+        if (localStorage.user !== undefined)
+            element.querySelector('.username-input').value = localStorage.user;
+
         this.distribution = distribution.weighted;
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector('.streetview'), element.querySelector('.return-home'));
@@ -58,6 +61,8 @@ class Game {
         let username = this.element.querySelector('.username-input').value;
         if (this.latestScore) {
             this.latestScore.user = username;
+            console.log('settings locastorage user to ', username);
+            localStorage.user = username;
             this.scores.addLocal(this.latestScore);
             await this.scores.addGlobal(this.latestScore);
         }
@@ -99,6 +104,8 @@ class Game {
     }
 
     applyRules() {
+        this.roundElement.innerHTML = `Round: <b>${this.currentRound}/${this.rules.roundCount}</b>`;
+
         if (!this.rules.panAllowed)
             this.svElement.restrictPan();
 
@@ -200,7 +207,6 @@ class Game {
         this.events = {};
         this.overviewLines = [];
         this.previousGuesses = [];
-        this.roundElement.innerHTML = `Round: <b>${this.currentRound}/${this.rules.roundCount}</b>`;
 
         this.preloadNextMap();
         this.nextRound();
