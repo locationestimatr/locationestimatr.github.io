@@ -353,9 +353,11 @@ class Game {
 
         this.roundElement.innerHTML = `Round: <b>${this.currentRound}/${this.rules.roundCount}</b>`;
 
+
         setTimeout(() => {
             this.timeElement.style.display = 'none';
             this.movesElement.style.display = 'none';
+            this.currentDestination = this.svElement.getLocation();
             this.fire('nextRound');
             this.removeOverviewLines();
             this.attachMap('.embed-map');

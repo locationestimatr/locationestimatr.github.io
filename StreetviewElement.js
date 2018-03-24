@@ -60,6 +60,13 @@ class StreetviewElement {
         this.flagElement.style.display = 'block';
     }
 
+    getLocation() {
+        let position = this.panorama.getPosition();
+        let lat = position.lat();
+        let lon = position.lng();
+        return [lat, lon];
+    }
+
     setLocation(lat, lon) {
         if (this.panorama !== undefined) {
             this.panorama.setPosition({lat: lat, lng: lon});
