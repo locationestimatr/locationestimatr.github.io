@@ -23,7 +23,7 @@ class GeoMap {
     }
 
     scoreCalculation(distance) {
-        if(distance < 5)
+        if(distance < 7.5)
             return 5000;
 
         let score = (this.minimumDistanceForPoints - distance) / (this.minimumDistanceForPoints / this.maxScore);
