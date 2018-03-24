@@ -18,21 +18,19 @@ async function init() {
     if (map === '')
         map = 'world';
 
-    console.log("Map: ", map);
-
-    mapManager = new MapManager();
+    let geoMap, mapManager = new MapManager();
     await mapManager.initialize();
-    map = await mapManager.getMap(map);
+    if (map.startsWith('area#')) {
+        let [, lat, lon, radius] = map.split('#').map(n => +n);
+        console.log(lat, lon, radius);
 
-    game = new Game(map, document.querySelector('.estimator'));
+        geoMap = mapManager.getAreaMap(lat, lon, radius);
+    } else {
+        geoMap = await mapManager.getMapByName(map);
+    }
 
-    // let svElement = new StreetviewElement(document.querySelector('.streetview'));
-
-    // streetview = new Streetview(maps.world);
-    // let location = await streetview.randomValidLocation();
-
-    // svElement.setLocation(...location);
-    // console.log({ location });
+    console.log("Map: ", map);
+    game = new Game(geoMap, document.querySelector('.estimator'));
 }
 
 function goHome() {

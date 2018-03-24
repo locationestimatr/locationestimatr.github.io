@@ -33,3 +33,10 @@ async function init() {
     }
     document.querySelector('.country-maps').innerHTML = html;
 }
+
+function playMyArea(e) {
+    navigator.geolocation.getCurrentPosition(position => {
+        let radius = document.querySelector('.radius-input').value;
+        location.href = `./play/#area#${position.coords.latitude}#${position.coords.longitude}#${radius}`;
+    });
+}

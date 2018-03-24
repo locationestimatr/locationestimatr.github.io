@@ -9,6 +9,10 @@ class Game {
         if (localStorage.user !== undefined)
             element.querySelector('.username-input').value = localStorage.user;
 
+        if (map.name === 'my_area') {
+            element.querySelector('.high-score-form').style.display = 'none';
+        }
+
         this.distribution = distribution.weighted;
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector('.streetview'), element.querySelector('.return-home'));

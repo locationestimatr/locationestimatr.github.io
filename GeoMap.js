@@ -19,7 +19,7 @@ class GeoMap {
     }
 
     isInMap(lat, lon) {
-        return google.maps.geometry.poly.containsLocation({ lat: () => lat, lng: () => lon }, this.polygon);
+        return google.maps.geometry.poly.containsLocation({lat: () => lat, lng: () => lon}, this.polygon);
     }
 
     scoreCalculation(distance) {

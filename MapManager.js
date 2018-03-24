@@ -6,7 +6,32 @@ class MapManager {
         this.maps = await response.json();
     }
 
-    async getMap(key) {
+    getAreaMap(lat, lon, radius, numSides = 20) {
+        radius *= 1000;
+        let center = new google.maps.LatLng(lat, lon);
+        const paths = [], degreeStep = 360 / numSides;
+
+        for (let i = 0; i < numSides; i++) {
+            const gpos = google.maps.geometry.spherical.computeOffset(center, radius, degreeStep * i);
+            paths.push({lat: gpos.lat(), lng: gpos.lng()});
+        }
+
+        paths.push(paths[0]);
+        console.log(paths);
+
+        let poly = new google.maps.Polygon({
+            paths: paths,
+            strokeColor: '#FFC107',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FFC107',
+            fillOpacity: 0.35
+        });
+
+        return this.getMapByPoly(poly, "my_area");
+    }
+
+    async getMapByName(key) {
         let poly;
         if (this.maps[key] === undefined) {
             poly = this.kmlsToPolygon(this.countries[key]);
@@ -22,8 +47,10 @@ class MapManager {
             }
         }
 
-        console.log({ poly });
+        return this.getMapByPoly(poly, key);
+    }
 
+    getMapByPoly(poly, mapName) {
         let area = 0;
         poly.getPaths().forEach(path => {
             area += google.maps.geometry.spherical.computeArea(path);
@@ -31,7 +58,7 @@ class MapManager {
 
         let minimumDistanceForPoints = Math.sqrt(area) * 2;
 
-        return new GeoMap(poly, minimumDistanceForPoints, key);
+        return new GeoMap(poly, minimumDistanceForPoints, mapName);
     }
 
     kmlsToPolygon(...kmls) {

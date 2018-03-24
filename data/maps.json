@@ -1,4 +1,7 @@
 {
+    "my_area":{
+        "type":"area"
+    },
     "world": {
         "type": "kml",
         "file": "world.kml"

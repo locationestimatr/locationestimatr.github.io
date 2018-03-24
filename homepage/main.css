@@ -79,6 +79,23 @@ body {
     transition: 0.15s;
 }
 
+.radius-picker span {
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.radius-input {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 5px;
+    border-radius: 3px;
+    width: 50px;
+    cursor: text;
+    text-align: center;
+    font-weight: bold;
+    color: #052216;
+}
+
 .map-text {
     padding: 15px;
 }
@@ -89,8 +106,12 @@ body {
     bottom: -1em;
 }
 
-.map-actions a {
-    color: #1ca56f;
+.clickable {
+    cursor: pointer;
+}
+
+.map-play, .map-score {
+    color: #1ca56f !important;
     text-transform: uppercase;
     font-weight: bold;
     margin-right: 10px;
@@ -100,12 +121,12 @@ body {
     transition: 0.1s;
 }
 
-.map-actions a:hover {
+.map-play:hover, .map-score:hover {
     background-color: rgba(28, 165, 111, 0.2);
     color: #40d298;
 }
 
-.map-actions a:active {
+.map-play a:active, .map-score:active {
     background-color: rgba(28, 165, 111, 0.35);
 }
 
@@ -128,6 +149,13 @@ body {
     display: inline-block;
     border-top-right-radius: 0.7em;
     border-top-left-radius: 0.7em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 ::-webkit-scrollbar {
@@ -163,12 +191,12 @@ body {
 
 ::-moz-selection {
     color: white;
-    background: rgb(255, 80, 0);
+    background: #1b7b57;
 }
 
 ::selection {
     color: white;
-    background: rgb(255, 80, 0);
+    background: #1b7b57;
 }
 
 ::-webkit-input-placeholder {

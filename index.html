@@ -45,6 +45,20 @@
                     </div>
                 </div>
             </div>
+            <div class="map">
+                <div class="map-background" style="background-image:url(data/thumbnails/my_area.jpg)"></div>
+                <div class="map-text">
+                    <div class="map-title">My Area</div>
+                    <div class="map-actions">
+                        <label class="radius-picker">
+                            <span>Radius</span>
+                            <input type="number" class="radius-input" value="10" placeholder="Radius in km">
+                            <span>km</span>
+                        </label>
+                        <span class="clickable map-play" onmouseup="playMyArea(event)">Play</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <h2>Country Collection Maps</h2>
         <div class="collection-maps map-container">
@@ -144,6 +158,8 @@
         </div>
     </div>
 </div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgTAL1XKBxQmkdz-FUItoNAqkN4QdoBbk&libraries=geometry"></script>
 </body>
 
 </html>
