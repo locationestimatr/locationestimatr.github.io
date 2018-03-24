@@ -6,7 +6,6 @@
 // Keuze voor distributed of niet
 // Database access veilig maken
 // Eerst round overview dan gamee overview geven aan het eind van de game
-// My region map maken die je locatie pakt en daar in een radius laat spelen
 
 distribution = {weighted: 0, uniform: 1};
 
