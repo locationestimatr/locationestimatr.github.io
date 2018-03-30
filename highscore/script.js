@@ -80,12 +80,17 @@ function showScore(e) {
     e.target.setAttribute('active', '');
 }
 
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "October", "November", "December"];
+
 function displayScores(element, scores) {
     let html = '';
-    for (let score of scores) html += `
+    for (let score of scores) {
+        let date = new Date(score.date);
+        html += `
             <li class="score" onclick="showScore(event)">
                 <div class="user">${score.user}</div>
                 <div class="total-score">${score.totalScore}</div>
+                <div class="score-date">${date.getDay()} ${months[date.getMonth()]} ${date.getFullYear()}</div>
                 <div class="hidden">
                     <h4>Round scores</h4>
                     <ol class="individual-scores">${score.individualScores.map(s => `<li>${s}</li>`).join('')}</ol>
@@ -100,5 +105,6 @@ function displayScores(element, scores) {
                 </div>
             </li>
         `;
+    }
     element.innerHTML = html;
 }

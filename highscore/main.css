@@ -116,6 +116,17 @@ body {
     font-size: 23px;
 }
 
+.score-date {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.score[active] .score-date {
+    font-size: 13px;
+    text-transform: none;
+}
+
 .user {
     font-weight: bold;
     transition: 0.1s;
