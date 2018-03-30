@@ -29,18 +29,18 @@ class GeoMap {
         let score = (this.minimumDistanceForPoints - distance) / (this.minimumDistanceForPoints / this.maxScore);
         let scoreDifficulty = 2;
 
-        console.log('1', score);
+        console.log("1", score);
 
         if (score < 0)
             return 0;
 
         score = score ** scoreDifficulty / this.maxScore ** (scoreDifficulty - 1);
 
-        console.log('2', score);
+        console.log("2", score);
 
         score = Math.max(0, score);
         score = Math.min(this.maxScore, score);
-        console.log('3', score);
+        console.log("3", score);
         return Math.round(score);
     }
 }

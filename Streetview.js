@@ -6,8 +6,8 @@ class Streetview {
 
     async randomValidLocation(endZoom = 14) {
         let tile = await this.randomValidTile(endZoom);
-        let canvas = document.createElement('canvas');
-        let context = canvas.getContext('2d');
+        let canvas = document.createElement("canvas");
+        let context = canvas.getContext("2d");
         let img = tile.img;
         canvas.width = img.width;
         canvas.height = img.height;
@@ -190,8 +190,8 @@ class Streetview {
     }
 
     getTileCoverage(img) {
-        let canvas = document.createElement('canvas');
-        let context = canvas.getContext('2d');
+        let canvas = document.createElement("canvas");
+        let context = canvas.getContext("2d");
         canvas.width = img.width;
         canvas.height = img.height;
         context.drawImage(img, 0, 0);

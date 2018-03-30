@@ -11,16 +11,16 @@ distribution = {weighted: 0, uniform: 1};
 
 async function init() {
     let map = decodeURI(location.hash.substring(1));
-    window.addEventListener('hashchange', () => {
+    window.addEventListener("hashchange", () => {
         location.reload();
     });
-    if (map === '')
-        map = 'world';
+    if (map === "")
+        map = "world";
 
     let geoMap, mapManager = new MapManager();
     await mapManager.initialize();
-    if (map.startsWith('area#')) {
-        let [, lat, lon, radius] = map.split('#').map(n => +n);
+    if (map.startsWith("area#")) {
+        let [, lat, lon, radius] = map.split("#").map(n => +n);
         console.log(lat, lon, radius);
 
         geoMap = mapManager.getAreaMap(lat, lon, radius);
@@ -29,9 +29,9 @@ async function init() {
     }
 
     console.log("Map: ", map);
-    game = new Game(geoMap, document.querySelector('.estimator'));
+    game = new Game(geoMap, document.querySelector(".estimator"));
 }
 
 function goHome() {
-    location.href = '../';
+    location.href = "../";
 }

@@ -1,5 +1,5 @@
 class Scores {
-    constructor(key = 'scores') {
+    constructor(key = "scores") {
         this.key = key;
         this.localScores = [];
 
@@ -15,10 +15,10 @@ class Scores {
 
     async getGlobalHighScores(map, rules, n = 20) {
         let records = await this.db
-            .collection('scores')
-            .where('map', '==', map)
-            // .where('rules', '==', rules)
-            .orderBy('totalScore', 'desc')
+            .collection("scores")
+            .where("map", "==", map)
+            // .where("rules", "==", rules)
+            .orderBy("totalScore", "desc")
             .limit(n)
             .get();
 
@@ -55,7 +55,7 @@ class Scores {
     }
 
     addGlobal(score) {
-        return this.db.collection('scores').add(score);
+        return this.db.collection("scores").add(score);
     }
 
     getLocalScores() {
