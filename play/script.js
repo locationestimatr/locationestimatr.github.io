@@ -6,6 +6,7 @@
 // Keuze voor distributed of niet
 // Database access veilig maken
 // Eerst round overview dan gamee overview geven aan het eind van de game
+// Mobile map location picker view verbeteren
 
 distribution = {weighted: 0, uniform: 1};
 
