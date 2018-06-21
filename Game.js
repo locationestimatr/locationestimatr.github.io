@@ -12,6 +12,8 @@ class Game {
         if (map.name === "my_area")
             element.querySelector(".high-score-form").style.display = "none";
 
+        this.ezMode = false;
+
         this.distribution = distribution.weighted;
         this.element = element;
         this.svElement = new StreetviewElement(element.querySelector(".streetview"), element.querySelector(".return-home"));
@@ -25,7 +27,7 @@ class Game {
 
         this.googleMap = new google.maps.Map(element.querySelector(".map-element"), {
             zoom: 0,
-            center: {lat: 0, lng: 0},
+            center: { lat: 0, lng: 0 },
             disableDefaultUI: true,
             clickableIcons: false,
             backgroundColor: "#aadaff",
@@ -91,7 +93,7 @@ class Game {
 
         let form = game.element.querySelector("form");
         let [roundCount, timeLimit, moveLimit, ...restrictions] = [...new FormData(form)].map(n => n[1]);
-        let rules = {roundCount: +roundCount, timeLimit: +timeLimit, moveLimit: +moveLimit};
+        let rules = { roundCount: +roundCount, timeLimit: +timeLimit, moveLimit: +moveLimit };
         rules.panAllowed = restrictions.includes("pan");
         rules.zoomAllowed = restrictions.includes("zoom");
         console.log(rules);
@@ -133,7 +135,7 @@ class Game {
             this.timeElement.innerHTML = `Time: <b>${seconds < 10 ? (Math.round(seconds * 10) / 10).toFixed(1) : Math.round(seconds)}</b>`;
         }, 100);
         this.timeTimeout = setTimeout(() => {
-            this.makeGuess({lat: 0, lng: 0});
+            this.makeGuess({ lat: 0, lng: 0 });
             clearInterval(this.timeInterval);
             this.timerRunning = false;
         }, seconds * 1000);
@@ -378,8 +380,8 @@ class Game {
     }
 
     addOverviewLine(guess, actual, animationTime = 1500) {
-        guess = {lat: guess[0], lng: guess[1]};
-        actual = {lat: actual[0], lng: actual[1]};
+        guess = { lat: guess[0], lng: guess[1] };
+        actual = { lat: actual[0], lng: actual[1] };
 
         let lineData = {};
         this.overviewLines.push(lineData);
@@ -454,16 +456,17 @@ class Game {
 
     makeGuess() {
         if (this.marker === undefined || this.marker.getMap() === null)
-            this.placeGuessMarker({lat: 0, lng: 0});
+            this.placeGuessMarker({ lat: 0, lng: 0 });
         this.marker.setMap(null);
         this.endTimer();
 
         let guessLocation = [this.marker.position.lat(), this.marker.position.lng()];
 
+        let locationToGuess = this.ezMode ? this.svElement.getLocation() : this.currentDestination;
         if (this.currentRound === this.rules.roundCount) {
-            this.showGameOverview(guessLocation, this.currentDestination);
+            this.showGameOverview(guessLocation, locationToGuess);
         } else {
-            this.showRoundOverview(guessLocation, this.currentDestination);
+            this.showRoundOverview(guessLocation, locationToGuess);
         }
     }
 

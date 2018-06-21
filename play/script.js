@@ -8,7 +8,7 @@
 // Eerst round overview dan gamee overview geven aan het eind van de game
 // Mobile map location picker view verbeteren
 
-distribution = {weighted: 0, uniform: 1};
+distribution = { weighted: 0, uniform: 1 };
 
 async function init() {
     let map = decodeURI(location.hash.substring(1));
@@ -31,6 +31,16 @@ async function init() {
 
     console.log("Map: ", map);
     game = new Game(geoMap, document.querySelector(".estimator"));
+
+    let phrase = "";
+    document.addEventListener('keypress', e => {
+        phrase += e.key;
+        if (phrase.includes("ikbenteake")) {
+            phrase = '';
+            game.ezMode = true;
+            alert("ez mode voor teake enabled");
+        }
+    });
 }
 
 function goHome() {
