@@ -15,7 +15,7 @@ This is a game where you are put anywhere on earth, and you have to figure out w
 
 ![Overview of score](screenshots/score.png)
 
-### How to self host this (in case my api quota runs out)
+### How to self host
 1. Fork this repository to your account
 2. Clone the repository
 3. Replace the api key found at the bottom in /index.html and /play/index.html with your own
