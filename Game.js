@@ -27,7 +27,7 @@ class Game {
 
         this.googleMap = new google.maps.Map(element.querySelector(".map-element"), {
             zoom: 0,
-            center: { lat: 0, lng: 0 },
+            center: {lat: 0, lng: 0},
             disableDefaultUI: true,
             clickableIcons: false,
             backgroundColor: "#aadaff",
@@ -90,10 +90,11 @@ class Game {
         }
 
         this.hideGameRuleSelection();
+        this.startTime = performance.now();
 
         let form = game.element.querySelector("form");
         let [roundCount, timeLimit, moveLimit, ...restrictions] = [...new FormData(form)].map(n => n[1]);
-        let rules = { roundCount: +roundCount, timeLimit: +timeLimit, moveLimit: +moveLimit };
+        let rules = {roundCount: +roundCount, timeLimit: +timeLimit, moveLimit: +moveLimit};
         rules.panAllowed = restrictions.includes("pan");
         rules.zoomAllowed = restrictions.includes("zoom");
         console.log(rules);
@@ -135,7 +136,7 @@ class Game {
             this.timeElement.innerHTML = `Time: <b>${seconds < 10 ? (Math.round(seconds * 10) / 10).toFixed(1) : Math.round(seconds)}</b>`;
         }, 100);
         this.timeTimeout = setTimeout(() => {
-            this.makeGuess({ lat: 0, lng: 0 });
+            this.makeGuess({lat: 0, lng: 0});
             clearInterval(this.timeInterval);
             this.timerRunning = false;
         }, seconds * 1000);
@@ -296,7 +297,8 @@ class Game {
             map: this.map.name,
             rules: this.rules,
             individualScores: this.previousGuesses.map(guess => guess.score),
-            date: new Date()
+            date: new Date(),
+            time: performance.now() - this.startTime
         };
 
         setTimeout(() => {
@@ -380,8 +382,8 @@ class Game {
     }
 
     addOverviewLine(guess, actual, animationTime = 1500) {
-        guess = { lat: guess[0], lng: guess[1] };
-        actual = { lat: actual[0], lng: actual[1] };
+        guess = {lat: guess[0], lng: guess[1]};
+        actual = {lat: actual[0], lng: actual[1]};
 
         let lineData = {};
         this.overviewLines.push(lineData);
@@ -456,7 +458,7 @@ class Game {
 
     makeGuess() {
         if (this.marker === undefined || this.marker.getMap() === null)
-            this.placeGuessMarker({ lat: 0, lng: 0 });
+            this.placeGuessMarker({lat: 0, lng: 0});
         this.marker.setMap(null);
         this.endTimer();
 

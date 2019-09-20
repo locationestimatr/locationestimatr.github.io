@@ -19,6 +19,7 @@ class Scores {
             .where("map", "==", map)
             // .where("rules", "==", rules)
             .orderBy("totalScore", "desc")
+            .orderBy("time")
             .limit(n)
             .get();
 

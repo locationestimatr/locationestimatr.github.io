@@ -82,6 +82,12 @@ function showScore(e) {
 
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+function msToTime(s) {
+    // Pad to 2 or 3 digits, default is 2
+    const pad = (n, z = 2) => ('00' + n).slice(-z);
+    return pad(s / 3.6e6 | 0) + ':' + pad((s % 3.6e6) / 6e4 | 0) + ':' + pad((s % 6e4) / 1000 | 0) + '.' + pad(s % 1000, 3);
+}
+
 function displayScores(element, scores) {
     let html = "";
     for (let score of scores) {
@@ -93,6 +99,7 @@ function displayScores(element, scores) {
                 <div class="total-score">${score.totalScore}</div>
                 <div class="score-date">${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}</div>
                 <div class="hidden">
+                    ${score.hasOwnProperty('time') ? `<p class="score-date">Time taken: ${msToTime(score.time)}<p>` : ''}
                     <h4>Round scores</h4>
                     <ol class="individual-scores">
                         ${score.individualScores.map(s => `<li>${s}</li>`).join("")}
