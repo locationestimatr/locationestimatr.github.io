@@ -87,7 +87,6 @@ function displayScores(element, scores) {
     for (let score of scores) {
         // New date has to be called because some records are in number format instead of date format, localStorage records are stored as string
         let date = new Date(score.date);
-        console.log(score, date, date.getMonth());
         html += `
             <li class="score" onclick="showScore(event)">
                 <div class="user">${score.user}</div>
