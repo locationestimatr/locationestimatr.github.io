@@ -80,13 +80,14 @@ function showScore(e) {
     e.target.setAttribute("active", "");
 }
 
-let months = ["January", "February", "March", "April", "May", "June", "July", "August", "October", "November", "December"];
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function displayScores(element, scores) {
     let html = "";
     for (let score of scores) {
         // New date has to be called because some records are in number format instead of date format, localStorage records are stored as string
         let date = new Date(score.date);
+        console.log(score, date, date.getMonth());
         html += `
             <li class="score" onclick="showScore(event)">
                 <div class="user">${score.user}</div>
@@ -95,7 +96,7 @@ function displayScores(element, scores) {
                 <div class="hidden">
                     <h4>Round scores</h4>
                     <ol class="individual-scores">
-                        ${score.individualScores.map(s =>  `<li>${s}</li>`).join("")}
+                        ${score.individualScores.map(s => `<li>${s}</li>`).join("")}
                     </ol>
                     <div class="rules">
                         <h4>Game rules</h4>
